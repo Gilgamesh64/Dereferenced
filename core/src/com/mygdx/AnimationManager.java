@@ -30,21 +30,25 @@ public class AnimationManager {
     private boolean alreadyPausedOnce = false;
     private GameActor pauser = new GameActor();
 
-    private float defaultDelay;
-    private float currentDelay;
+    private float defaultDelay = 0;
+    private float currentDelay = 0;
 
     public AnimationManager(AtlasEnum atlas, AnimationEnum textures) {
-        this(atlas, textures.animationRate, textures.delay, false, 1, textures.frameList);
+        this(atlas, textures.animationRate, textures.frameList);
+        delay(defaultDelay);
     }
 
-    public AnimationManager(AtlasEnum atlas, float animationRate, float delay, boolean playOnce, int sizeX, TextureEnum... textures) {
-        this.playOnce = playOnce;
-        for (TextureEnum e : textures) {
-            TextureAtlas.AtlasRegion region = RM.get().getAtlas(atlas).findRegion(e.path);
+    public AnimationManager(AtlasEnum atlas, float animationRate, TextureEnum... textures) {
+        this(atlas, animationRate, 1, 1, textures);
+    }
+
+    public AnimationManager(AtlasEnum atlas, float animationRate, int sizeX, int sizeY, TextureEnum... textures) {
+        for (TextureEnum texture : textures) {
+            TextureAtlas.AtlasRegion region = RM.get().getAtlas(atlas).findRegion(texture.path);
             if (region == null) {
-                throw new RuntimeException("Region not found: " + e.path);
+                throw new RuntimeException("Region not found: " + texture.path);
             }
-            int frameCount = e.frameCount / sizeX;
+            int frameCount = texture.frameCount / sizeX;
 
             int frameWidth = region.getRegionWidth() / frameCount;
             int frameHeight = region.getRegionHeight();
@@ -55,27 +59,35 @@ public class AnimationManager {
                 frames[i] = new TextureRegion(region, i * frameWidth, 0, frameWidth, frameHeight);
             }
 
-            Animation<TextureRegion> anim = new Animation<>(e.animationRate != -1 ? e.animationRate : animationRate,
-                    frames);
-            anim.setPlayMode(playOnce ? PlayMode.NORMAL : PlayMode.LOOP);
+            Animation<TextureRegion> anim = new Animation<>(
+                    texture.animationRate != -1 ? texture.animationRate : animationRate, frames);
 
-            animationMap.put(e, anim);
-
+            anim.setPlayMode(PlayMode.LOOP);
+            animationMap.put(texture, anim);
         }
 
         currentAnimation = textures[0];
         currentFrame = animationMap.get(currentAnimation).getKeyFrame(stateTime);
 
-        defaultDelay = delay;
-        currentDelay = currentAnimation.delay != -1 ? currentAnimation.delay : defaultDelay;
+        currentDelay = currentAnimation.delay != -1 ? currentAnimation.delay : 0;
 
         GCStage.get().addActor(pauser);
-
     }
 
-    /** @return current frame in the animation */
-    public TextureRegion getCurrentFrame() {
-        return currentFrame;
+    public AnimationManager delay(float defaultDelay) {
+        this.defaultDelay = defaultDelay;
+        return this;
+    }
+
+    public AnimationManager playOnce(boolean playOnce) {
+        this.playOnce = playOnce;
+        animationMap.get(currentAnimation).setPlayMode(playOnce ? PlayMode.NORMAL : PlayMode.LOOP);
+        return this;
+    }
+
+    public AnimationManager shouldNotDoFirstPlay() {
+        shouldNotDoFirstPlay = true;
+        return this;
     }
 
     /** updates currentFrame state */
@@ -117,8 +129,6 @@ public class AnimationManager {
     }
 
     public void setCurrentAnimation(TextureEnum ani) {
-
-        
         currentAnimation = ani;
         currentDelay = ani.delay != -1 ? ani.delay : defaultDelay;
         pauser.clearActions();
@@ -132,10 +142,6 @@ public class AnimationManager {
         animation.setPlayMode(playOnce ? PlayMode.NORMAL : PlayMode.LOOP);
     }
 
-    public void shouldNotDoFirstPlay(){
-        shouldNotDoFirstPlay = true;
-    }
-
     /**
      * @return true if the animation has completed (only relevant if playOnce =
      *         true)
@@ -144,11 +150,16 @@ public class AnimationManager {
         return finishedOnce;
     }
 
-    public float getWidth(){
+    /** @return current frame in the animation */
+    public TextureRegion getCurrentFrame() {
+        return currentFrame;
+    }
+
+    public float getWidth() {
         return animationMap.get(currentAnimation).getKeyFrame(stateTime).getRegionWidth();
     }
 
-    public float getHeight(){
+    public float getHeight() {
         return animationMap.get(currentAnimation).getKeyFrame(stateTime).getRegionHeight();
     }
 }

@@ -24,7 +24,7 @@ public class Building extends GameActor {
         setX(coords.x);
         setY(coords.y);
 
-        animationManager = new AnimationManager(AtlasEnum.BUILDINGS, 0.2f, 0, false, 1, textures);
+        animationManager = new AnimationManager(AtlasEnum.BUILDINGS, 0.2f, textures);
 
         hitbox = new Hitbox(
                 new Vector2(getX() + animationManager.getWidth() * 0.5f,
