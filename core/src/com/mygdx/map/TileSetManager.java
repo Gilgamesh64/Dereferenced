@@ -107,9 +107,10 @@ public class TileSetManager implements Telegraph {
                 String name = obj.getName();
                 String dst = name.split("-")[1] + "-" + name.split("-")[0];
                 String dir = obj.getProperties().get("dir").toString();
-                float x = pointObj.getPoint().x- 16, y = pointObj.getPoint().y;
+                int size = obj.getProperties().get("size") == null ? 1 : ((int)obj.getProperties().get("size"));
+                float x = pointObj.getPoint().x - (16 * size), y = pointObj.getPoint().y;
                 String texture = obj.getProperties().get("texture").toString();
-                GCStage.get().addActor(new TextureDoor(name, dst, dir, x, y, texture));
+                GCStage.get().addActor(new TextureDoor(name, dst, dir, x, y, size, texture));
             }
         }
     }

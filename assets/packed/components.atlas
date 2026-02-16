@@ -11,72 +11,86 @@ Glass_door1
   orig: 1024, 64
   offset: 0, 0
   index: -1
-glass_door
-  rotate: false
-  xy: 2053, 67
-  size: 144, 32
-  orig: 144, 32
-  offset: 0, 0
-  index: -1
-glass_door_closing
+double_door_closing
   rotate: false
   xy: 1, 1
   size: 1024, 32
   orig: 1024, 32
   offset: 0, 0
   index: -1
-glass_door_opening
+double_door_opening
+  rotate: false
+  xy: 1, 1
+  size: 1024, 32
+  orig: 1024, 32
+  offset: 0, 0
+  index: -1
+glass_door
+  rotate: false
+  xy: 2311, 67
+  size: 144, 32
+  orig: 144, 32
+  offset: 0, 0
+  index: -1
+glass_door_closing
   rotate: false
   xy: 1027, 67
   size: 1024, 32
   orig: 1024, 32
   offset: 0, 0
   index: -1
+glass_door_opening
+  rotate: false
+  xy: 1027, 33
+  size: 1024, 32
+  orig: 1024, 32
+  offset: 0, 0
+  index: -1
 lamp
   rotate: false
-  xy: 1285, 1
+  xy: 2555, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 long_lamp
   rotate: false
-  xy: 1351, 1
+  xy: 2621, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 marco_lamp
   rotate: false
-  xy: 1027, 1
+  xy: 2053, 35
   size: 256, 64
   orig: 256, 64
   offset: 0, 0
   index: -1
 rubbish
   rotate: false
-  xy: 2199, 67
+  xy: 2457, 67
   size: 96, 32
   orig: 96, 32
   offset: 0, 0
   index: -1
 saving_tree
   rotate: false
-  xy: 1417, 1
+  xy: 2687, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 side_walk
   rotate: false
-  xy: 2297, 67
+  xy: 2787, 67
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 traffic_light
   rotate: false
-  xy: 1483, 1
+  xy: 2753, 35
   size: 32, 64
   orig: 32, 64
   offset: 0, 0

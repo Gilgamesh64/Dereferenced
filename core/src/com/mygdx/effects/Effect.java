@@ -22,7 +22,7 @@ public class Effect extends GameActor {
         setCoords(x, y);
         float animationRate = texture.animationRate != -1 ? texture.animationRate : 0.2f;
         float delay = texture.delay != -1 ? texture.delay : 0f;
-        animationManager = new AnimationManager(AtlasEnum.EFFECTS, animationRate, delay, true, texture);
+        animationManager = new AnimationManager(AtlasEnum.EFFECTS, animationRate, delay, true,1, texture);
 
         this.addAction(Actions.sequence(
             Actions.delay(duration),
@@ -40,7 +40,7 @@ public class Effect extends GameActor {
         setCoords(x, y);
         float animationRate = texture.animationRate != -1 ? texture.animationRate : 0.2f;
         float delay = texture.delay != -1 ? texture.delay : 0f;
-        animationManager = new AnimationManager(AtlasEnum.EFFECTS, animationRate, delay, true, texture);
+        animationManager = new AnimationManager(AtlasEnum.EFFECTS, animationRate, delay, true,1, texture);
 
         shouldDoOnce = true;
     }

@@ -16,7 +16,7 @@ import com.mygdx.screens.ScreensManager;
 
 public class TextureDoor extends Door {
 
-    public TextureDoor(String name, String dst, String dir, float x, float y, String textureBaseName) {
+    public TextureDoor(String name, String dst, String dir, float x, float y, int size, String textureBaseName) {
         super(name, dst, dir, x, y);
         String opening = textureBaseName + "_OPENING";
         String closing = textureBaseName + "_CLOSING";
@@ -24,9 +24,9 @@ public class TextureDoor extends Door {
         TextureEnum closingEnum = TextureEnum.valueOf(closing);
 
         var texture = RM.get().getAtlas(AtlasEnum.COMPONENTS).findRegion(opening.toLowerCase());
-        float width = texture.getRegionWidth() / openingEnum.frameCount;
+        float width = texture.getRegionWidth() / openingEnum.frameCount * size;
         float height = texture.getRegionHeight();
-        animationManager = new AnimationManager(AtlasEnum.COMPONENTS, 0.1f, 0f, true, openingEnum, closingEnum);
+        animationManager = new AnimationManager(AtlasEnum.COMPONENTS, 0.1f, 0f, true, size,  openingEnum, closingEnum);
         animationManager.shouldNotDoFirstPlay();
 
         setSize(width, height);

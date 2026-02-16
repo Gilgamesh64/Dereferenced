@@ -17,7 +17,7 @@ public class Component extends GameActor {
         setX(coords.x);
         setY(coords.y);
 
-        animationManager = new AnimationManager(AtlasEnum.COMPONENTS, 0.2f, 0, false, textures);
+        animationManager = new AnimationManager(AtlasEnum.COMPONENTS, 0.2f, 0, false, 1, textures);
     }
     public Component(float x, float y, TextureEnum... textures){
         this(new Vector2(x, y), textures);

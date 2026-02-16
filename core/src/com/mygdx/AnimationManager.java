@@ -34,23 +34,24 @@ public class AnimationManager {
     private float currentDelay;
 
     public AnimationManager(AtlasEnum atlas, AnimationEnum textures) {
-        this(atlas, textures.animationRate, textures.delay, false, textures.frameList);
+        this(atlas, textures.animationRate, textures.delay, false, 1, textures.frameList);
     }
 
-    public AnimationManager(AtlasEnum atlas, float animationRate, float delay, boolean playOnce, TextureEnum... textures) {
+    public AnimationManager(AtlasEnum atlas, float animationRate, float delay, boolean playOnce, int sizeX, TextureEnum... textures) {
         this.playOnce = playOnce;
         for (TextureEnum e : textures) {
             TextureAtlas.AtlasRegion region = RM.get().getAtlas(atlas).findRegion(e.path);
             if (region == null) {
                 throw new RuntimeException("Region not found: " + e.path);
             }
+            int frameCount = e.frameCount / sizeX;
 
-            int frameWidth = region.getRegionWidth() / e.frameCount;
+            int frameWidth = region.getRegionWidth() / frameCount;
             int frameHeight = region.getRegionHeight();
 
             // split horizontally into frames
-            TextureRegion[] frames = new TextureRegion[e.frameCount];
-            for (int i = 0; i < e.frameCount; i++) {
+            TextureRegion[] frames = new TextureRegion[frameCount];
+            for (int i = 0; i < frameCount; i++) {
                 frames[i] = new TextureRegion(region, i * frameWidth, 0, frameWidth, frameHeight);
             }
 
