@@ -9,12 +9,12 @@ import com.mygdx.GCStage;
 import com.mygdx.camera.CameraController;
 import com.mygdx.delay.DelayManager;
 import com.mygdx.entities.Scope;
+import com.mygdx.entities.npcs.states.StateController;
 import com.mygdx.gunControls.projectiles.Projectile;
 import com.mygdx.hitboxes.Tags;
 import com.mygdx.map.TileMapCollisionsManager;
 import com.mygdx.messages.MSG;
 import com.mygdx.resources.enums.TextureEnum;
-import com.mygdx.states.StateController;
 
 import java.util.Random;
 

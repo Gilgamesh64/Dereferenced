@@ -7,8 +7,8 @@ import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.entities.Player;
 import com.mygdx.entities.map.doors.Door;
+import com.mygdx.entities.player.Player;
 import com.mygdx.messages.MSG;
 
 public class GCStage extends Stage {

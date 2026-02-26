@@ -1,5 +1,7 @@
-package com.mygdx.entities;
+package com.mygdx.entities.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,7 +12,6 @@ import com.mygdx.hitboxes.Collider;
 import com.mygdx.hitboxes.Hitbox;
 import com.mygdx.hitboxes.Tags;
 import com.mygdx.messages.MSG;
-import com.mygdx.movement.PlayerMovement;
 import com.mygdx.resources.enums.AnimationEnum;
 import com.mygdx.resources.enums.AtlasEnum;
 import com.mygdx.resources.enums.TextureEnum;
@@ -74,6 +75,11 @@ public class Player extends ScriptableActor{
         super.act(delta);
 
         CameraController.calculateMouseAngle(center);
+
+        if(Gdx.input.isKeyJustPressed(Keys.E)){
+            Vector2 mouseDir = CameraController.getMouseDirection().scl(32);
+            this.moveBy(mouseDir.x, mouseDir.y);
+        }
 
         animationManager.setCurrentAnimation(
                 autoMovementManager.update() ? 

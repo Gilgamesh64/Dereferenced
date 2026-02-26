@@ -6,7 +6,7 @@ filter: Linear, Linear
 repeat: none
 default-rect
   rotate: false
-  xy: 1157, 929
+  xy: 1285, 1025
   size: 3, 3
   split: 1, 1, 1, 1
   pad: 0, 0, 0, 0
@@ -15,7 +15,7 @@ default-rect
   index: -1
 default-round
   rotate: false
-  xy: 131, 398
+  xy: 1157, 912
   size: 12, 20
   split: 5, 5, 5, 4
   pad: 4, 4, 1, 1
@@ -24,7 +24,7 @@ default-round
   index: -1
 default-select-selection
   rotate: false
-  xy: 1027, 834
+  xy: 263, 447
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -32,7 +32,7 @@ default-select-selection
   index: -1
 checkbox_checked
   rotate: false
-  xy: 1285, 1030
+  xy: 1664, 1882
   size: 32, 32
   split: 0, 0, 0, 0
   orig: 32, 32
@@ -40,7 +40,7 @@ checkbox_checked
   index: -1
 checkbox_empty
   rotate: false
-  xy: 1534, 1787
+  xy: 1, 291
   size: 32, 32
   split: 6, 6, 6, 6
   orig: 32, 32
@@ -64,15 +64,36 @@ dialogue
   index: -1
 small_dial
   rotate: false
-  xy: 1, 299
+  xy: 1027, 813
   size: 32, 24
   split: 8, 7, 5, 4
   orig: 32, 24
   offset: 0, 0
   index: -1
-blank
+ability_bar_bg
   rotate: false
   xy: 263, 452
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+ability_bar_fill
+  rotate: false
+  xy: 1285, 1030
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+ability_bar_segment
+  rotate: false
+  xy: 393, 452
+  size: 4, 32
+  orig: 4, 32
+  offset: 0, 0
+  index: -1
+blank
+  rotate: false
+  xy: 1534, 1787
   size: 32, 32
   split: 0, 0, 0, 0
   orig: 32, 32
@@ -95,7 +116,7 @@ inventory
   index: -1
 money
   rotate: false
-  xy: 1664, 1882
+  xy: 131, 386
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

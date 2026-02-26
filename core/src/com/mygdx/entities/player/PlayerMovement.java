@@ -1,4 +1,4 @@
-package com.mygdx.movement;
+package com.mygdx.entities.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.Data;
 import com.mygdx.GCStage;
 import com.mygdx.camera.CameraController;
-import com.mygdx.entities.Player;
 import com.mygdx.map.TileMapCollisionsManager;
 
 /**

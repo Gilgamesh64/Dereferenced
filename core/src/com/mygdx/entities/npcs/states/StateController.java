@@ -1,4 +1,4 @@
-package com.mygdx.states;
+package com.mygdx.entities.npcs.states;
 
 public class StateController {
     public enum MovementState {
