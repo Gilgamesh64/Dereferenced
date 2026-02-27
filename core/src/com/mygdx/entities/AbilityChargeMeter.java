@@ -1,48 +1,42 @@
 package com.mygdx.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-
 public class AbilityChargeMeter {
 
     private static final int MAX_CHARGES = 3;
     private static final float CHARGE_PER_USE = 1f / MAX_CHARGES;
+    private static float secondsToFull = 10;
 
-    private float charge = 0f;
-    private float chargeRate;
+    private static float charge = 0f;
+    private static float chargeRate = 1f / secondsToFull;
 
-    public AbilityChargeMeter(float secondsToFull) {
-        this.chargeRate = 1f / secondsToFull;
-    }
-
-    public void update(float delta) {
+    public static void update(float delta) {
         charge = Math.min(1f, charge + chargeRate * delta);
-
-        if(Gdx.input.isKeyJustPressed(Keys.F)){
-            useAbility();
-        }
     }
 
-    public int getAvailableCharges() {
+    public static int getAvailableCharges() {
         return (int)(charge / CHARGE_PER_USE);
     }
 
-    public boolean canUseAbility() {
+    public static boolean canUseAbility() {
         return getAvailableCharges() > 0;
     }
 
-    public void useAbility() {
+    public static void useAbility() {
         if (!canUseAbility()) return;
 
         charge -= CHARGE_PER_USE;
         charge = Math.max(0f, charge);
     }
 
-    public float getChargePercent() {
+    public static float getChargePercent() {
         return charge;
     }
 
-    public float getTimeUntilNextCharge() {
+    public static void setSecondsToFull(float secondsToFull) {
+        AbilityChargeMeter.secondsToFull = secondsToFull;
+    }
+
+    public static float getTimeUntilNextCharge() {
         float remainder = charge % CHARGE_PER_USE;
         if (remainder == 0f && canUseAbility()) return 0f;
 

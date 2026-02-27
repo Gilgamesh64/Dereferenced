@@ -19,9 +19,11 @@ import com.mygdx.AnimationManager;
 import com.mygdx.Data;
 import com.mygdx.GCStage;
 import com.mygdx.camera.CameraController;
+import com.mygdx.entities.AbilityChargeMeter;
+import com.mygdx.entities.MovementAbilityHelper;
 import com.mygdx.entities.helpers.ScriptableActor;
 
-public class Player extends ScriptableActor{
+public class Player extends ScriptableActor {
 
     private final PlayerMovement movement;
     private final AnimationManager animationManager;
@@ -54,8 +56,9 @@ public class Player extends ScriptableActor{
         CameraController.calculateMouseAngle(center);
 
         animationManager = new AnimationManager(AtlasEnum.PLAYER, AnimationEnum.PLAYER);
-            
-        if(Data.debug) debug();
+
+        if (Data.debug)
+            debug();
 
         movement = new PlayerMovement();
     }
@@ -76,15 +79,16 @@ public class Player extends ScriptableActor{
 
         CameraController.calculateMouseAngle(center);
 
-        if(Gdx.input.isKeyJustPressed(Keys.E)){
-            Vector2 mouseDir = CameraController.getMouseDirection().scl(32);
-            this.moveBy(mouseDir.x, mouseDir.y);
+        if (Gdx.input.isKeyJustPressed(Keys.E)) {
+            if (AbilityChargeMeter.canUseAbility()) {
+                AbilityChargeMeter.useAbility();
+                MovementAbilityHelper.dash(this, CameraController.getMouseDirection(), 32);
+            }
         }
 
         animationManager.setCurrentAnimation(
-                autoMovementManager.update() ? 
-                    TextureEnum.valueOf("PLAYER_" + autoMovementManager.getOrientation()) : 
-                    TextureEnum.valueOf("PLAYER_" + movement.move()));
+                autoMovementManager.update() ? TextureEnum.valueOf("PLAYER_" + autoMovementManager.getOrientation())
+                        : TextureEnum.valueOf("PLAYER_" + movement.move()));
 
         animationManager.updateAnimation(delta);
     }
@@ -98,19 +102,21 @@ public class Player extends ScriptableActor{
 
     @Override
     public boolean handleMessage(Telegram msg) {
-        if(msg.message == MSG.SWAP_FIGHT_STATE.code) swapFightingState();
-        
+        if (msg.message == MSG.SWAP_FIGHT_STATE.code)
+            swapFightingState();
+
         return true;
     }
 
     public boolean isFighting() {
         return fighting;
     }
-    
-    public void swapFightingState(){
-        if(fighting) GunController.get().remove();
-        else GCStage.get().addActor(GunController.get());
 
+    public void swapFightingState() {
+        if (fighting)
+            GunController.get().remove();
+        else
+            GCStage.get().addActor(GunController.get());
 
         fighting = !fighting;
     }

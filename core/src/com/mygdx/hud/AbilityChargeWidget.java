@@ -8,18 +8,15 @@ import com.mygdx.resources.RM;
 
 public class AbilityChargeWidget extends GameActor {
 
-    private final AbilityChargeMeter meter;
     private final Drawable background;
     private final Drawable fill;
     private final Drawable segment;
 
-    public AbilityChargeWidget(AbilityChargeMeter meter) {
-        this.meter = meter;
+    public AbilityChargeWidget() {
         this.background = RM.get().skin().getDrawable("ability_bar_bg");
         this.fill = RM.get().skin().getDrawable("ability_bar_fill");
         this.segment = RM.get().skin().getDrawable("ability_bar_segment");
 
-        
         setSize(background.getMinWidth(), background.getMinHeight());
     }
 
@@ -27,7 +24,7 @@ public class AbilityChargeWidget extends GameActor {
     public void draw(Batch batch, float parentAlpha) {
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
 
-        float filled = getWidth() * meter.getChargePercent();
+        float filled = getWidth() * AbilityChargeMeter.getChargePercent();
         fill.draw(batch, getX(), getY(), filled, getHeight());
 
         float segmentWidth = getWidth() / 3f;
@@ -43,6 +40,6 @@ public class AbilityChargeWidget extends GameActor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        meter.update(delta);
+        AbilityChargeMeter.update(delta);
     }
 }

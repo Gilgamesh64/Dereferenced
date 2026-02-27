@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Data;
 import com.mygdx.Money;
-import com.mygdx.entities.AbilityChargeMeter;
 import com.mygdx.resources.RM;
 
 public class Hud implements Disposable {
@@ -52,7 +51,6 @@ public class Hud implements Disposable {
         stage = new Stage(viewport);
         mux.addProcessor(0, stage);
 
-
         inventory = new Inventory(stage);
 
         table = new Table();
@@ -72,11 +70,11 @@ public class Hud implements Disposable {
 
         table.add(healthBar).bottom().left();
 
-        abilityBar = new AbilityChargeWidget(new AbilityChargeMeter(10));
-        table.add(abilityBar).bottom().right();
+        abilityBar = new AbilityChargeWidget();
+        table.add(abilityBar).bottom().right().padRight(10).padBottom(10);
 
-        //debugData = new Label("Debug: ", RM.get().skin());
-        //table.add(debugData).bottom().right();
+        debugData = new Label("Debug: ", RM.get().skin());
+        table.add(debugData).top().right();
     }
 
     public void draw() {
