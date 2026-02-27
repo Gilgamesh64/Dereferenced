@@ -81,19 +81,16 @@ public class BaseGun extends Actor {
     public void onSwitched() {
     }
 
-    public int leftTrigger() {
+    public void leftTrigger() {
         GCStage.get().send(MSG.SHOT);
-        return 0;
     }
 
-    public int rightTrigger() {
+    public void rightTrigger() {
         GCStage.get().send(MSG.SHOT);
-        return 0;
     }
 
-    public int middleTrigger() {
+    public void middleTrigger() {
         GCStage.get().send(MSG.SHOT);
-        return 0;
     }
 
     public void setStop(boolean stop) {

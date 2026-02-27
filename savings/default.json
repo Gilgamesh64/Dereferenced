@@ -1,14 +1,18 @@
 {
-"LAST_ROOM": "REFLECTION_ARENA",
+"LAST_ROOM": "RICH_DISTRICT",
 "PLAYER": {
-	"x": 1101.26,
-	"y": 1376.6307
+	"x": 2235.0603,
+	"y": 1114.8734
 },
 "FIGHTING": false,
 "FLAGS": [
 	true,
 	true,
 	false
+],
+"SELECTED_GUNS": [
+	true,
+	true
 ],
 "MONEY": 0
 }

@@ -1,6 +1,6 @@
 
 bullets.png
-size: 16, 16
+size: 32, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -9,6 +9,13 @@ bullet
   xy: 1, 9
   size: 10, 4
   orig: 10, 4
+  offset: 0, 0
+  index: -1
+shield
+  rotate: false
+  xy: 1, 15
+  size: 24, 32
+  orig: 24, 32
   offset: 0, 0
   index: -1
 stone

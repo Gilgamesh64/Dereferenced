@@ -43,6 +43,7 @@ public enum TextureEnum {
     CHAINGUN,
 
     USBLADE,
+    SHIELD,
 
     // BUILDINGS
     ABANDONED_TURNED_OFF(4),

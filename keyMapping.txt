@@ -1,0 +1,33 @@
+KEYS:
+
+SHIFT_RIGHT -> stop camera
+  UP -> move cam up
+  DOWN -> move cam down
+  LEFT -> move cam left
+  RIGHT -> move cam right
+  NUMPAD_8 -> zoom
+  NUMPAD_2 -> dezoom
+C -> use movement ability
+D -> move right
+A -> move left
+W -> move up
+S -> move down
+LEFT SHIFT -> turbo sprint (dev only)
+E -> swap weapon
+I -> toggle inventory
+ESCAPE -> pause
+U -> expode
+M -> save
+L -> gain money
+H -> block walls
+J -> swap fight state
+
+BUTTONS:
+
+LEFT -> 
+  trigger dialogue
+  skip writer eff
+  select dialogue option
+  gun left trugger
+RIGHT -> 
+  gun right trigger

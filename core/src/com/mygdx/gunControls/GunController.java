@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.gunControls.guns.BaseGun;
@@ -101,13 +102,18 @@ public class GunController extends Actor {
         if (gunlist.isEmpty() || !DelayManager.isDelayOver(this))
             return;
 
-        int j = 0;
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            j = currentGun.leftTrigger();
+            currentGun.leftTrigger();
         } else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-            j = currentGun.rightTrigger();
+            currentGun.rightTrigger();
         }
-        gunIndex = (gunIndex + j) % gunlist.size();
+        if(Gdx.input.isKeyJustPressed(Keys.E)){
+            advance(1);
+        }
+    }
+
+    public void advance(int amount){
+        gunIndex = (gunIndex + amount) % gunlist.size();
     }
 
     public void updateGuns(float delta) {

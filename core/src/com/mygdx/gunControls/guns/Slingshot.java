@@ -14,20 +14,14 @@ public class Slingshot extends BaseGun {
         flip(false, true);
     }
 
-    public int leftTrigger() {
+    public void leftTrigger() {
         GCStage.get().addActor(new Stone(GCStage.get().getPlayer().center, getWidth(), true));
         GunController.get().setCooldown(10);
         GunController.get().resetCooldown();
-        return 1;
     }
 
-    public int rightTrigger() {
+    public void rightTrigger() {
         GCStage.get().addActor(new Stone(GCStage.get().getPlayer().center, getWidth(), true));
         GunController.get().setCooldown(20);
-        return 2;
-    }
-
-    public int middleTrigger() {
-        return 0;
     }
 }

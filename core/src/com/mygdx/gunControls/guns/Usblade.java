@@ -15,7 +15,7 @@ public class Usblade extends BaseGun {
         setOffset(35, 0, 0);
     }
 
-    public int leftTrigger() {
+    public void leftTrigger() {
         super.leftTrigger();
         UsbladeProj proj = new UsbladeProj(
             GCStage.get().getPlayer().center,
@@ -25,7 +25,5 @@ public class Usblade extends BaseGun {
         GCStage.get().addActor(proj);
 
         GunController.get().setCooldown(50);
-        return 1;
     }
-
 }

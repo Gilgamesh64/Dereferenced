@@ -79,7 +79,7 @@ public class Player extends ScriptableActor {
 
         CameraController.calculateMouseAngle(center);
 
-        if (Gdx.input.isKeyJustPressed(Keys.E)) {
+        if (Gdx.input.isKeyJustPressed(Keys.C)) {
             if (AbilityChargeMeter.canUseAbility()) {
                 AbilityChargeMeter.useAbility();
                 MovementAbilityHelper.dash(this, CameraController.getMouseDirection(), 32);

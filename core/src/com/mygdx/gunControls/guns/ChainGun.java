@@ -19,7 +19,7 @@ public class ChainGun extends BaseGun {
      * ChainGun class
      */
     public ChainGun() {
-        super(RM.get().getSpriteFromAtlas(AtlasEnum.WEAPONS, TextureEnum.DEFAULT), GCStage.get().getPlayer().center, 0);
+        super(RM.get().getSpriteFromAtlas(AtlasEnum.WEAPONS, TextureEnum.CHAINGUN), GCStage.get().getPlayer().center, 0);
         setOffset(30, 0, 0);
         flip(true, false);
 
@@ -62,7 +62,7 @@ public class ChainGun extends BaseGun {
         DelayManager.registerObject(reload, timeOff);
     }
 
-    public int leftTrigger() {
+    public void leftTrigger() {
         super.leftTrigger();
         Projectile proj = new Projectile(GCStage.get().getPlayer().center, getWidth(), CameraController.getMouseAngle() + angleOffset, true);
         GCStage.get().addActor(proj);
@@ -73,22 +73,18 @@ public class ChainGun extends BaseGun {
         // cooldown = cooldown between projectiles
         GunController.get().setCooldown(cooldown);
         DelayManager.resetDelay(this);
-
-        return bullets > 0 ? 0 : 1;
     }
 
-    public int rightTrigger() {
+    public void rightTrigger() {
         super.rightTrigger();
         Projectile proj = new Projectile(GCStage.get().getPlayer().center, getWidth(), CameraController.getMouseAngle() + angleOffset, true);
         GCStage.get().addActor(proj);
 
         GunController.get().setCooldown(50);
-        return 2;
     }
 
-    public int middleTrigger() {
+    public void middleTrigger() {
         super.middleTrigger();
-        return 0;
     }
 
     public int getBullets() {

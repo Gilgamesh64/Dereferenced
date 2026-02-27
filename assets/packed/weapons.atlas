@@ -4,18 +4,18 @@ size: 128, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+chaingun
+  rotate: false
+  xy: 1, 19
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
 default
   rotate: false
   xy: 101, 35
   size: 16, 16
   orig: 16, 16
-  offset: 0, 0
-  index: -1
-sniper
-  rotate: false
-  xy: 1, 19
-  size: 48, 32
-  orig: 48, 32
   offset: 0, 0
   index: -1
 sword
