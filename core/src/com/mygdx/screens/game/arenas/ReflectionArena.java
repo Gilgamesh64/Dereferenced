@@ -16,8 +16,7 @@ public class ReflectionArena extends PlayableScreen {
 
     public ReflectionArena() {
         super(MapEnum.REFLECTION_ARENA);
-        GCStage.get().addAll(new Reflection(new NPCBuilder().coordinates(Data.TILE * 10, Data.TILE * 10)
-                .texture(AnimationEnum.BLACKMARKETEER)));
+        GCStage.get().addAll(new Reflection(NPCBuilder.create(AnimationEnum.BLACKMARKETEER, Data.TILE * 10, Data.TILE * 10)));
     }
 
     @Override

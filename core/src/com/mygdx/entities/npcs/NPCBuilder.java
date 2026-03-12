@@ -12,29 +12,20 @@ public class NPCBuilder {
     protected DialogueEnum story;
     protected ScriptEnum autoStartedScript;
     protected TextureEnum startingAnimation;
+    protected NpcInteraction interaction;
+    protected NpcUpdate update;
 
-    public NPCBuilder coordinates(Vector2 coordinates) {
-        this.coordinates = coordinates;
-        return this;
+    public static NPCBuilder create(AnimationEnum anim, int x, int y) {
+        return new NPCBuilder(anim, new Vector2(x, y));
     }
 
-    public NPCBuilder coordinates(float x, float y) {
-        this.coordinates = new Vector2(x, y);
-        return this;
-    }
-
-    public NPCBuilder size(Vector2 size) {
-        this.size = size;
-        return this;
+    private NPCBuilder(AnimationEnum anim, Vector2 coords) {
+        this.anim = anim;
+        this.coordinates = coords;
     }
 
     public NPCBuilder size(float x, float y) {
         this.size = new Vector2(x, y);
-        return this;
-    }
-
-    public NPCBuilder texture(AnimationEnum texture) {
-        this.anim = texture;
         return this;
     }
 
@@ -43,16 +34,27 @@ public class NPCBuilder {
         return this;
     }
 
-    public NPCBuilder autoStartedScript(ScriptEnum e){
+    public NPCBuilder autoStartedScript(ScriptEnum e) {
         this.autoStartedScript = e;
         return this;
     }
 
-    public NPCBuilder startingAnimation(TextureEnum e){
+    public NPCBuilder startingAnimation(TextureEnum e) {
         this.startingAnimation = e;
         return this;
     }
-    public NPC build(){
+
+    public NPCBuilder interaction(NpcInteraction interaction) {
+        this.interaction = interaction;
+        return this;
+    }
+
+    public NPCBuilder update(NpcUpdate update) {
+        this.update = update;
+        return this;
+    }
+
+    public NPC build() {
         return new NPC(this);
     }
 }

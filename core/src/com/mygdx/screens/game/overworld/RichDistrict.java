@@ -12,9 +12,7 @@ import com.mygdx.screens.generic.PlayableScreen;
 
 public class RichDistrict extends PlayableScreen {
 
-        private NPC particularNPC2 = new NPCBuilder()
-                        .coordinates(Data.TILE * 55, Data.TILE * 25)
-                        .texture(AnimationEnum.BLACKMARKETEER)
+        private NPC particularNPC2 = NPCBuilder.create(AnimationEnum.BLACKMARKETEER, Data.TILE * 55, Data.TILE * 25)
                         .story(DialogueEnum.ADEPTUS_1)
                         .autoStartedScript(ScriptEnum.BLACKMARKETEER_1)
                         .build();

@@ -24,6 +24,8 @@ public class NPC extends ScriptableActor {
     protected String name;
     private Dialogue currentDialogue = null;
 
+    private NpcUpdate onUpdate;
+
     public NPC(NPCBuilder npcBuilder) {
         super();
         setTouchable(Touchable.enabled);
@@ -32,13 +34,13 @@ public class NPC extends ScriptableActor {
         setOrigin(getWidth() / 2, getHeight() / 2);
 
         animationManager = new AnimationManager(AtlasEnum.NPCS, npcBuilder.anim);
-        
 
-        
         if (npcBuilder.startingAnimation != null)
             animationManager.setCurrentAnimation(npcBuilder.startingAnimation);
 
         name = npcBuilder.anim.toString();
+
+        onUpdate = npcBuilder.update;
 
         hitbox = new Hitbox(center, npcBuilder.size.x, npcBuilder.size.y, true);
         hitbox.setTags(Tags.NPC, Tags.ENEMY);
@@ -49,6 +51,11 @@ public class NPC extends ScriptableActor {
                 return;
 
             boolean leftPressed = Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
+
+            if(leftPressed && !Data.dialogueActive){
+                if(npcBuilder.story != null) tell(npcBuilder.story);
+                if(npcBuilder.interaction != null) npcBuilder.interaction.interact(this);
+            }
 
             if (leftPressed && npcBuilder.story != null && !Data.dialogueActive) {
                 tell(npcBuilder.story);
@@ -61,7 +68,8 @@ public class NPC extends ScriptableActor {
         if (npcBuilder.autoStartedScript != null)
             doScript(npcBuilder.autoStartedScript);
 
-        if(Data.debug) debug();
+        if (Data.debug)
+            debug();
     }
 
     @Override
@@ -73,6 +81,10 @@ public class NPC extends ScriptableActor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if (onUpdate != null) {
+            onUpdate.update(this);
+        }
 
         if (currentDialogue == null) {
             autoMovementManager.update();
