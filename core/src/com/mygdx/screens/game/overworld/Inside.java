@@ -2,8 +2,8 @@ package com.mygdx.screens.game.overworld;
 
 import com.mygdx.Data;
 import com.mygdx.entities.npcs.NPCBuilder;
+import com.mygdx.quest.Quests;
 import com.mygdx.resources.enums.AnimationEnum;
-import com.mygdx.resources.enums.DialogueEnum;
 import com.mygdx.resources.enums.MapEnum;
 import com.mygdx.screens.generic.PlayableScreen;
 
@@ -15,10 +15,16 @@ public class Inside extends PlayableScreen {
         stage.addAll(
             NPCBuilder.create(AnimationEnum.JERKINS, Data.TILE * 6, Data.TILE * 6)
                 .interaction(npc -> {
-                    npc.tell(DialogueEnum.ADEPTUS_1);
+                    if(Quests.BANDITS.get().equals("PROCEEDING")){
+                        Quests.BANDITS.set("COMPLETED");
+                    }
+                    else{
+                        Quests.BANDITS.set("STARTED");
+                    }
+                    
+                    System.out.println(Quests.BANDITS.get());
                 })
                 .update(npc -> {
-                    System.out.println("Ciao");
                 })
                 .build()
         );

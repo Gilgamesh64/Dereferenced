@@ -1,10 +1,12 @@
 package com.mygdx.savings;
 
+import java.util.EnumMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.GCStage;
 import com.mygdx.Money;
+import com.mygdx.quest.Quests;
 import com.mygdx.screens.Screens;
 import com.mygdx.screens.ScreensManager;
 
@@ -14,6 +16,7 @@ public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
     private Vector2 lastRoomCoordinates = new Vector2();
     private boolean[] flags, selectedGuns = new boolean[] { true, true };
     private int money;
+    private EnumMap<Quests, String> quests = new EnumMap<>(Quests.class);
 
     public void updateData() {
         lastRoom = ScreensManager.getLastPlayableActiveScreen();
@@ -23,6 +26,9 @@ public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
         flags = new boolean[] { true, true, false };
         selectedGuns = new boolean[] { true, true };
         money = Money.get();
+        for (var q : Quests.values()) {
+            quests.put(q, q.get());
+        }
     }
 
     @Override
@@ -33,6 +39,7 @@ public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
         json.writeValue("FLAGS", flags);
         json.writeValue("SELECTED_GUNS", selectedGuns);
         json.writeValue("MONEY", money);
+        json.writeValue("QUESTS", quests);
     }
 
     @Override
@@ -44,10 +51,20 @@ public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
 
         fightging = jsonData.getBoolean("FIGHTING");
 
-        //flags = jsonData.get("FLAGS").asBooleanArray();
-        //selectedGuns = jsonData.get("SELECTED_GUNS").asBooleanArray();
+        // flags = jsonData.get("FLAGS").asBooleanArray();
+        // selectedGuns = jsonData.get("SELECTED_GUNS").asBooleanArray();
         money = jsonData.getInt("MONEY");
         Money.set(money);
+
+        quests = new EnumMap<>(Quests.class);
+        JsonValue q = jsonData.get("QUESTS");
+
+        for (JsonValue entry = q.child; entry != null; entry = entry.next) {
+            Quests key = Quests.valueOf(entry.name); // key is the JSON field name
+            String value = entry.get("value").asString();
+            quests.put(key, value);
+        }
+
     }
 
     public Vector2 getPlayerCoordinates() {

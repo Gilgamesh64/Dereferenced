@@ -18,6 +18,7 @@ public class SavingsManager {
         if (json == null) {
             json = new Json();
             json.setOutputType(OutputType.json);
+            json.setTypeName(null);
         }
         s.updateData();
         writeFile(json.prettyPrint(s));
@@ -27,6 +28,7 @@ public class SavingsManager {
         if (json == null) {
             json = new Json();
             json.setOutputType(OutputType.json);
+            json.setTypeName(null);
         }
         FileHandle file = Gdx.files.local("savings/savings.json");
         String jsonFile = file.readString();
