@@ -13,7 +13,7 @@ import com.mygdx.screens.generic.PlayableScreen;
 public class RichDistrict extends PlayableScreen {
 
         private NPC particularNPC2 = NPCBuilder.create(AnimationEnum.BLACKMARKETEER, Data.TILE * 55, Data.TILE * 25)
-                        .interaction(npc -> {
+                        .onInteraction(npc -> {
                                 if(Quests.BANDITS.get().equals("STARTED")){
                                         Quests.BANDITS.set("PROCEEDING");
                                         System.out.println(Quests.BANDITS.get());

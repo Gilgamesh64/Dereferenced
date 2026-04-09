@@ -24,14 +24,6 @@
    </properties>
    <point/>
   </object>
-  <object id="47" name="RICH_DISTRICT-INSIDE" x="1952" y="2032">
-   <properties>
-    <property name="dir" value="u"/>
-    <property name="size" type="int" value="2"/>
-    <property name="texture" value="DOUBLE_DOOR"/>
-   </properties>
-   <point/>
-  </object>
  </objectgroup>
  <objectgroup id="5" name="buildings">
   <object id="24" name="MARMOT_PIZZA" x="2304" y="2032" width="96" height="80"/>

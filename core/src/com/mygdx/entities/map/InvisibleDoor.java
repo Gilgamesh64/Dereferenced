@@ -35,7 +35,7 @@ public class InvisibleDoor extends Door {
             if (Data.exiting)
                 return;
 
-            GCStage.get().getPlayer().moveTo(insideCoords, () -> {
+            GCStage.get().getPlayer().movAbs(insideCoords, () -> {
                 Data.exiting = true;
                 ScreensManager.setScreen(Screens.valueOf(dst.split("-")[0]), dst);
             });

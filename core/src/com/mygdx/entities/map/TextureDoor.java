@@ -53,7 +53,7 @@ public class TextureDoor extends Door {
                 return;
             }
             animationManager.setCurrentAnimation(openingEnum);
-            GCStage.get().getPlayer().moveTo(insideCoords, () -> {
+            GCStage.get().getPlayer().movAbs(insideCoords, () -> {
                 Data.exiting = true;
                 ScreensManager.setScreen(Screens.valueOf(dst.split("-")[0]), dst);
                 

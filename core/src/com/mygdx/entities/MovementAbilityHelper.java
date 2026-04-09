@@ -6,6 +6,6 @@ import com.mygdx.entities.helpers.GameActor;
 public class MovementAbilityHelper {
     public static void dash(GameActor actor, Vector2 angle, float scaleFactor){
         angle.scl(scaleFactor);
-        actor.moveBy(angle.x, angle.y);
+        actor.movRel(angle.x, angle.y);
     }
 }

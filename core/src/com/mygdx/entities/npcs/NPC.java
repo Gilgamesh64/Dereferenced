@@ -70,6 +70,9 @@ public class NPC extends ScriptableActor {
 
         if (Data.debug)
             debug();
+
+        if(npcBuilder.construction != null)
+            npcBuilder.construction.onConstruction(this);
     }
 
     @Override

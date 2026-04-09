@@ -35,9 +35,9 @@ public class ScriptableActor extends GameActor {
 
     public void move(float x, float y, boolean relative) {
         if (relative)
-            moveTo(getCoords().add(new Vector2(x, y)));
+            movAbs(getCoords().add(new Vector2(x, y)));
         else
-            moveTo(x, y);
+            movAbs(x, y);
     }
 
     public void proceed() {

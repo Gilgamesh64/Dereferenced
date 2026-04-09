@@ -12,6 +12,7 @@ public class NPCBuilder {
     protected DialogueEnum story;
     protected ScriptEnum autoStartedScript;
     protected TextureEnum startingAnimation;
+    protected NpcConstruction construction;
     protected NpcInteraction interaction;
     protected NpcUpdate update;
 
@@ -44,12 +45,17 @@ public class NPCBuilder {
         return this;
     }
 
-    public NPCBuilder interaction(NpcInteraction interaction) {
+    public NPCBuilder onConstruction(NpcConstruction construction){
+        this.construction = construction;
+        return this;
+    }
+
+    public NPCBuilder onInteraction(NpcInteraction interaction) {
         this.interaction = interaction;
         return this;
     }
 
-    public NPCBuilder update(NpcUpdate update) {
+    public NPCBuilder onUpdate(NpcUpdate update) {
         this.update = update;
         return this;
     }

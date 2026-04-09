@@ -36,18 +36,25 @@ public class GameActor extends Actor implements Telegraph {
         return new Vector2(getX(), getY());
     }
 
-    public void moveTo(Vector2 coords) {
+    public void movAbs(Vector2 coords) {
         autoMovementManager.goTo(coords);
     }
-    public void moveTo(Vector2 coords, Runnable onEnd) {
+    public void movAbs(Vector2 coords, Runnable onEnd) {
         autoMovementManager.goTo(coords, onEnd);
     }
 
-    public void moveTo(float x, float y) {
+    public void movAbs(float x, float y) {
         autoMovementManager.goTo(new Vector2(x, y));
     }
-    public void moveTo(float x, float y, Runnable onEnd) {
+    public void movAbs(float x, float y, Runnable onEnd) {
         autoMovementManager.goTo(new Vector2(x, y), onEnd);
+    }
+
+    public void movRel(Vector2 coords) {
+        autoMovementManager.goTo(this.getCoords().add(coords));
+    }
+    public void movRel(float x, float y) {
+        autoMovementManager.goTo(this.getCoords().add(new Vector2(x, y)));
     }
     
 

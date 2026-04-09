@@ -32,6 +32,7 @@ public class Script {
                         case "DO" -> new DoAction(ScriptEnum.valueOf(args[0]));
                         case "TELL" -> new TellAction(DialogueEnum.valueOf(args[0]));
                         case "SAY" -> new SayAction(stringified);
+                        case "REMOVE" -> new RemoveAction();
                         case "SKIP" -> new SkipAction();
                         default -> null;
                     }

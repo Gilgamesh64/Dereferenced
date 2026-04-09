@@ -145,6 +145,6 @@ public abstract class PlayableScreen extends GenericScreen {
         Door door = GCStage.get().getDoor(doorName);
         player.setCoords(door.getInsideCoords());
         stage.getCamera().position.set(getPlayerCoordinates(), 0);
-        player.moveTo(door.getOutsideCoords(), () -> Data.exiting = false);
+        player.movAbs(door.getOutsideCoords(), () -> Data.exiting = false);
     }
 }
