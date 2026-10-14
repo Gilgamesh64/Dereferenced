@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.dialogues.GameStory;
 import com.mygdx.resources.enums.*;
 import com.ray3k.stripe.FreeTypeSkinLoader;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

@@ -2,7 +2,6 @@ package com.mygdx.screens.generic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.Data;
 import com.mygdx.GCStage;
@@ -13,7 +12,6 @@ import com.mygdx.entities.map.doors.Door;
 import com.mygdx.entities.player.Player;
 import com.mygdx.hitboxes.HitboxHandler;
 import com.mygdx.hud.Hud;
-import com.mygdx.map.TileMapCollisionsManager;
 import com.mygdx.map.MapManager;
 import com.mygdx.messages.MSG;
 import com.mygdx.resources.enums.MapEnum;
@@ -22,14 +20,12 @@ import com.mygdx.savings.SavingsManager;
 import com.mygdx.screens.Screens;
 import com.mygdx.screens.ScreensManager;
 
-import java.util.HashMap;
-
 /**
  * generic abstract class for every playable screen
  */
 public abstract class PlayableScreen extends GenericScreen {
 
-    public MapManager tileSetManager;
+    public MapManager mapManager;
     protected boolean stopGame = false;
     protected Hud hud;
     protected HitboxHandler hitboxHandler;
@@ -46,8 +42,7 @@ public abstract class PlayableScreen extends GenericScreen {
         hitboxHandler = new HitboxHandler();
         HitboxHandler.set(hitboxHandler);
 
-        tileSetManager = new MapManager(map);
-        TileMapCollisionsManager.layer = ((TiledMapTileLayer) tileSetManager.getMap().getLayers().get("background"));
+        mapManager = new MapManager(map);
 
         player = new Player(SavingsManager.getSavings().getPlayerCoordinates());
 
@@ -68,8 +63,7 @@ public abstract class PlayableScreen extends GenericScreen {
 
         CameraController.initCamera();
 
-        TileMapCollisionsManager.layer = ((TiledMapTileLayer) tileSetManager.getMap().getLayers().get("background"));
-        GCStage.get().subscribe(tileSetManager, MSG.BLOCK_WALLS, MSG.SWAP_FIGHT_STATE);
+        GCStage.get().subscribe(mapManager, MSG.BLOCK_WALLS, MSG.SWAP_FIGHT_STATE);
         GCStage.get().subscribe(player, MSG.SWAP_FIGHT_STATE);
         if (SavingsManager.getSavings().isFightging())
             GCStage.get().send(MSG.SWAP_FIGHT_STATE, MSG.BLOCK_WALLS); //turns on combat mode
@@ -110,7 +104,7 @@ public abstract class PlayableScreen extends GenericScreen {
         CameraController.updateCamera();
         hitboxHandler.checkRegistered();
 
-        tileSetManager.render(camera);
+        mapManager.render(camera);
 
         stage.draw();
 
@@ -134,10 +128,6 @@ public abstract class PlayableScreen extends GenericScreen {
         return this.name.name();
     }
 
-    public HashMap<String, Vector2> getMarkersMap() {
-        return tileSetManager.markersMap;
-    }
-
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
@@ -150,5 +140,9 @@ public abstract class PlayableScreen extends GenericScreen {
         player.setCoords(door.getInsideCoords());
         stage.getCamera().position.set(getPlayerCoordinates(), 0);
         player.movAbs(door.getOutsideCoords(), () -> Data.exiting = false);
+    }
+
+    public MapManager getMapManager(){
+        return mapManager;
     }
 }

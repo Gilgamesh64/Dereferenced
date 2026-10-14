@@ -66,7 +66,7 @@ public class NPC extends ScriptableActor {
         if (npcBuilder.autoStartedScript != null)
             doScript(npcBuilder.autoStartedScript);
 
-        if (Data.debug)
+        if (Data.HITBOX_DEBUG)
             debug();
 
         if (npcBuilder.construction != null)

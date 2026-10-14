@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.PointMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -30,6 +29,7 @@ import com.mygdx.resources.enums.TextureEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class MapManager implements Telegraph {
     private final HashMap<String, Vector2> markersMap = new HashMap<>();
@@ -114,10 +114,13 @@ public class MapManager implements Telegraph {
                 Rectangle rect = rectObj.getRectangle();
 
                 TextureEnum texture = TextureEnum.valueOf(obj.getName());
+                if (texture == null)
+                    throw new IllegalStateException("texture with name: " + obj.getName()
+                            + ". Not found in TextureEnum. \nMake sure to add the entry");
 
                 TextureRegion region = RM.get().getAtlas(AtlasEnum.COMPONENTS).findRegion(texture.path);
                 if (region == null) {
-                    throw new RuntimeException("\nERROR\n\nResourceEnum: " + texture +
+                    throw new RuntimeException("ResourceEnum: " + texture +
                             " not found in region, \nthe .png file should be in the folder: assets/raw/"
                             + AtlasEnum.COMPONENTS
                             + " \ncheck your spelling and pack all the assets");
@@ -133,7 +136,7 @@ public class MapManager implements Telegraph {
                 Rectangle rect = rectObj.getRectangle();
                 String name = obj.getName();
                 String dst = name.split("-")[1] + "-" + name.split("-")[0];
-                String dir = obj.getProperties().get("dir").toString();
+                String dir = Objects.requireNonNull(obj.getProperties().get("dir")).toString();
                 float x = rect.getX(), y = rect.getY();
                 float width = rect.getWidth(), height = rect.getHeight();
                 GCStage.get().addActor(new InvisibleDoor(name, dst, dir, x, y, width, height));
@@ -141,10 +144,10 @@ public class MapManager implements Telegraph {
             } else if (obj instanceof PointMapObject pointObj) {
                 String name = obj.getName();
                 String dst = name.split("-")[1] + "-" + name.split("-")[0];
-                String dir = obj.getProperties().get("dir").toString();
-                int size = obj.getProperties().get("size") == null ? 1 : ((int) obj.getProperties().get("size"));
+                String dir = Objects.requireNonNull(obj.getProperties().get("dir")).toString();
+                int size = (int) Objects.requireNonNullElse(obj.getProperties().get("size"), 1);
                 float x = pointObj.getPoint().x - (16 * size), y = pointObj.getPoint().y;
-                String texture = obj.getProperties().get("texture").toString();
+                String texture = Objects.requireNonNull(obj.getProperties().get("texture")).toString();
                 GCStage.get().addActor(new TextureDoor(name, dst, dir, x, y, size, texture));
             }
         }
@@ -171,6 +174,10 @@ public class MapManager implements Telegraph {
                 markersMap.put(marker.getName(), coords);
             }
         }
+    }
+
+    public Vector2 getMarker(String name){
+        return Objects.requireNonNull(markersMap.get(name), "marker name is null in markersMap");
     }
 
     @Override
@@ -208,6 +215,16 @@ public class MapManager implements Telegraph {
         return tile;
     }
 
+    public TiledMapTileLayer getLayer(String name){
+        MapLayer layer = map.getLayers().get(name);
+        if(layer == null)
+            throw new IllegalArgumentException("layer not found for name:" + name);
+        if(layer instanceof TiledMapTileLayer tmtl){
+            return tmtl;
+        }
+        throw new IllegalStateException("layer with name: " + name + ". Is not TiledMapTileLayer");
+    }
+
     /**
      * @param x
      * @param y
@@ -215,28 +232,22 @@ public class MapManager implements Telegraph {
      * @throws IllegalStateException if anything is null
      */
     public boolean isWalkable(float x, float y) throws IllegalStateException {
-        MapLayer layer = map.getLayers().get("background");
+        TiledMapTileLayer background = getLayer("background");
 
-        if (layer instanceof TiledMapTileLayer background) {
-            TiledMapTile tile = getTile(x, y, background);
+        TiledMapTile tile = getTile(x, y, background);
 
-            if (tile.getProperties().get("blocked") == null)
-                return true;
-
-        } else
-            throw new IllegalStateException("background layer is not instance of TiledMapTileLayer");
-
-        return false;
+        return tile.getProperties().get("blocked") == null;
     }
 
-    public static boolean changeFightingState() {
-        if (!transitionInCooldown && getCurrentTileProprieties().containsKey("transition")) {
-            transitionInCooldown = true;
+    public boolean changeFightingState() {
+        TiledMapTile playerTile = getTile(GCStage.get().getPlayer().getX(), GCStage.get().getPlayer().getY(), getLayer("background"));
+        if (!fightTransitionInCooldown && playerTile.getProperties().containsKey("transition")) {
+            fightTransitionInCooldown = true;
             return true;
         }
 
-        if (!getCurrentTileProprieties().containsKey("transition") && transitionInCooldown) {
-            transitionInCooldown = false;
+        if (!playerTile.getProperties().containsKey("transition") && fightTransitionInCooldown) {
+            fightTransitionInCooldown = false;
         }
         return false;
     }

@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.Data;
 import com.mygdx.entities.helpers.GameActor;
-import com.mygdx.map.TileMapCollisionsManager;
 import com.mygdx.screens.ScreensManager;
 
 public class PathFinder {
@@ -67,8 +66,8 @@ public class PathFinder {
             return Collections.emptyList();
         }
 
-        if (!TileMapCollisionsManager.isWalkable(start.y, start.x)
-                || !TileMapCollisionsManager.isWalkable(goal.y, goal.x)) {
+        if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(start.y, start.x)
+                || !ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(goal.y, goal.x)) {
             return Collections.emptyList();
         }
 
@@ -103,7 +102,7 @@ public class PathFinder {
                 int nextCol = current.x + direction[0];
                 int nextRow = current.y + direction[1];
 
-                if (!TileMapCollisionsManager.isWalkable(nextRow, nextCol)) {
+                if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(nextRow, nextCol)) {
                     continue;
                 }
 
@@ -174,10 +173,5 @@ public class PathFinder {
             this.position = new GridPoint2(position);
             this.f = f;
         }
-    }
-
-
-    public static Vector2 getMarker(String name) {
-        return ScreensManager.getCurrentPlayableScreen().tileSetManager.markersMap.get(name);
     }
 }

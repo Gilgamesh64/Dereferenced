@@ -39,7 +39,7 @@ public class Scope extends GameActor {
         hitbox.setOnLeave(collider -> hitplayer = false);
         hitbox.register();
 
-        if (Data.debug) debug();
+        if (Data.HITBOX_DEBUG) debug();
         setCoords(coords);
     }
 

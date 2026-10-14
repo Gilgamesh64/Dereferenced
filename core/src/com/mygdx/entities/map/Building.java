@@ -33,7 +33,7 @@ public class Building extends GameActor {
         hitbox.setOnHit((collider) -> fade = 0.2f);
         hitbox.setOnLeave((collider) -> fade = 1);
         hitbox.register();
-        if (Data.debug) debug();
+        if (Data.HITBOX_DEBUG) debug();
     }
 
     public Building(float x, float y, TextureEnum... textures) {
@@ -55,7 +55,7 @@ public class Building extends GameActor {
         hitbox.setOnHit((collider) -> fade = 0.2f);
         hitbox.setOnLeave((collider) -> fade = 1);
         hitbox.register();
-        if (Data.debug) debug();
+        if (Data.HITBOX_DEBUG) debug();
     }
 
     public Building(float x, float y, TextureEnum textures) {

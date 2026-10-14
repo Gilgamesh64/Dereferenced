@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.Data;
 import com.mygdx.GCStage;
 import com.mygdx.camera.CameraController;
-import com.mygdx.map.TileMapCollisionsManager;
+import com.mygdx.screens.ScreensManager;
 
 /**
  * RealtimeMovement for the overworld
@@ -68,14 +68,14 @@ public class PlayerMovement {
             finalPosition.y -= 100;
         }
 
-        if (TileMapCollisionsManager.getCurrentTileProprieties() == null)
+        if (ScreensManager.getCurrentPlayableScreen().getMapManager().getTile(player.getX(), player.getY(), ScreensManager.getCurrentPlayableScreen().getMapManager().getLayer("background")) == null)
             return "";
 
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
             finalPosition.scl(10);
 
         finalPosition.scl(Gdx.graphics.getDeltaTime());
-        if (TileMapCollisionsManager.isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
+        if (ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
             player.setX(player.getX() + finalPosition.x);
             player.setY(player.getY() + finalPosition.y);
         }
@@ -118,14 +118,14 @@ public class PlayerMovement {
         if (finalPosition.x == 0 && finalPosition.y == 0) {
             direction = "IDLE_" + lastDirection.split("_")[1];
         }
-        if (TileMapCollisionsManager.getCurrentTileProprieties() == null)
+        if (ScreensManager.getCurrentPlayableScreen().getMapManager().getTile(player.getX(), player.getY(), ScreensManager.getCurrentPlayableScreen().getMapManager().getLayer("background")) == null)
             return "";
 
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
             finalPosition.scl(10);
 
         finalPosition.scl(Gdx.graphics.getDeltaTime());
-        if (TileMapCollisionsManager.isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
+        if (ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
             player.setX(player.getX() + finalPosition.x);
             player.setY(player.getY() + finalPosition.y);
         }

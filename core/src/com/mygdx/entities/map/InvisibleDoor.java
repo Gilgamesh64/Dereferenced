@@ -43,7 +43,7 @@ public class InvisibleDoor extends Door {
         hitbox.register();
         setPosition(x, y);
 
-        if (Data.debug)
+        if (Data.HITBOX_DEBUG)
             debug();
     }
 

@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.entities.helpers.GameActor;
 import com.mygdx.entities.helpers.ScriptableActor;
-import com.mygdx.map.TileMapCollisionsManager;
-
+import com.mygdx.screens.ScreensManager;
 public class AutoMovementManager {
 
     private final GameActor actor;
@@ -30,7 +29,7 @@ public class AutoMovementManager {
         Vector2 direction = new Vector2(destination).sub(actor.getCoords()).nor();
         Vector2 movement = new Vector2(direction).scl(100 * Gdx.graphics.getDeltaTime());
 
-        if (!TileMapCollisionsManager.isWalkable(actor.getX() + movement.x, actor.getY() + movement.y)
+        if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(actor.getX() + movement.x, actor.getY() + movement.y)
                 || actor.getCoords().dst(destination) < 1) {
             reset();
             return false;

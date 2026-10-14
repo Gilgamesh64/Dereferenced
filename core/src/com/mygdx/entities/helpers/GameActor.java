@@ -52,7 +52,7 @@ public class GameActor extends Actor implements Telegraph {
     }
 
     public void movAbs(String destination) {
-        Vector2 coords = ScreensManager.getCurrentPlayableScreen().tileSetManager.markersMap.get(destination);
+        Vector2 coords = ScreensManager.getCurrentPlayableScreen().getMapManager().getMarker(destination);
 
         if (coords == null) return;
         movAbs(coords);

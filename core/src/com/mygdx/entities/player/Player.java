@@ -54,7 +54,7 @@ public class Player extends ScriptableActor {
         CameraController.calculateMouseAngle(center);
 
         animationManager = new AnimationManager(AtlasEnum.PLAYER, AnimationEnum.PLAYER);
-        if (Data.debug)
+        if (Data.HITBOX_DEBUG)
             debug();
 
         movement = new PlayerMovement();
