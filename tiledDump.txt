@@ -73,7 +73,7 @@ public class PlayerTiledMovementStyle extends MovementStyle {
         if (x == 0 && y == 0)
             return idleDir;
 
-        if (TileMapCollisionsManager.canMove(player.getX() + x, player.getY() + y)) {
+        if (TileMapCollisionsManager.isWalkable(player.getX() + x, player.getY() + y)) {
             MoveByAction mba = new MoveByAction();
             mba.setAmount(x, y);
             mba.setDuration(0.1f);

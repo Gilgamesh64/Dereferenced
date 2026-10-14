@@ -72,6 +72,6 @@ public class GCStage extends Stage {
                 .filter(Door.class::isInstance)
                 .map(Door.class::cast)
                 .filter(d -> d.getName().equals(doorName))
-                .findAny().get();
+                .findAny().orElseThrow(() -> new RuntimeException("Door not found with name:" + doorName));
     }
 }

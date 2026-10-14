@@ -75,7 +75,7 @@ public class PlayerMovement {
             finalPosition.scl(10);
 
         finalPosition.scl(Gdx.graphics.getDeltaTime());
-        if (TileMapCollisionsManager.canMove(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
+        if (TileMapCollisionsManager.isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
             player.setX(player.getX() + finalPosition.x);
             player.setY(player.getY() + finalPosition.y);
         }
@@ -125,7 +125,7 @@ public class PlayerMovement {
             finalPosition.scl(10);
 
         finalPosition.scl(Gdx.graphics.getDeltaTime());
-        if (TileMapCollisionsManager.canMove(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
+        if (TileMapCollisionsManager.isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
             player.setX(player.getX() + finalPosition.x);
             player.setY(player.getY() + finalPosition.y);
         }

@@ -14,7 +14,7 @@ import com.mygdx.entities.player.Player;
 import com.mygdx.hitboxes.HitboxHandler;
 import com.mygdx.hud.Hud;
 import com.mygdx.map.TileMapCollisionsManager;
-import com.mygdx.map.TileSetManager;
+import com.mygdx.map.MapManager;
 import com.mygdx.messages.MSG;
 import com.mygdx.resources.enums.MapEnum;
 import com.mygdx.resources.enums.TextureEnum;
@@ -29,7 +29,7 @@ import java.util.HashMap;
  */
 public abstract class PlayableScreen extends GenericScreen {
 
-    public TileSetManager tileSetManager;
+    public MapManager tileSetManager;
     protected boolean stopGame = false;
     protected Hud hud;
     protected HitboxHandler hitboxHandler;
@@ -46,7 +46,7 @@ public abstract class PlayableScreen extends GenericScreen {
         hitboxHandler = new HitboxHandler();
         HitboxHandler.set(hitboxHandler);
 
-        tileSetManager = new TileSetManager(map);
+        tileSetManager = new MapManager(map);
         TileMapCollisionsManager.layer = ((TiledMapTileLayer) tileSetManager.getMap().getLayers().get("background"));
 
         player = new Player(SavingsManager.getSavings().getPlayerCoordinates());

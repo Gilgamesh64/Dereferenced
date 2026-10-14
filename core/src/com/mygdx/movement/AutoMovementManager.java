@@ -30,7 +30,7 @@ public class AutoMovementManager {
         Vector2 direction = new Vector2(destination).sub(actor.getCoords()).nor();
         Vector2 movement = new Vector2(direction).scl(100 * Gdx.graphics.getDeltaTime());
 
-        if (!TileMapCollisionsManager.canMove(actor.getX() + movement.x, actor.getY() + movement.y)
+        if (!TileMapCollisionsManager.isWalkable(actor.getX() + movement.x, actor.getY() + movement.y)
                 || actor.getCoords().dst(destination) < 1) {
             reset();
             return false;

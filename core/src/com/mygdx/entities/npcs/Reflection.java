@@ -85,7 +85,7 @@ public class Reflection extends NPC {
                 getActions().clear();
             }
             case FOLLOW_PLAYER -> {
-                if (TileMapCollisionsManager.canMove(playerPos.x, playerPos.y)) {
+                if (TileMapCollisionsManager.isWalkable(playerPos.x, playerPos.y)) {
                     Action movement = Actions.moveTo(playerPos.x, playerPos.y, 5);
                     addAction(movement);
                 }
@@ -95,7 +95,7 @@ public class Reflection extends NPC {
                 }
             }
             case CIRLE_AROUND -> {
-                if (TileMapCollisionsManager.canMove(playerPos.x, playerPos.y)) {
+                if (TileMapCollisionsManager.isWalkable(playerPos.x, playerPos.y)) {
 
                 }
                 System.out.println("CIRCLING");
@@ -106,7 +106,7 @@ public class Reflection extends NPC {
                 float rand = new Random().nextFloat() % 0.8f;
                 Vector2 mov = new Vector2(1, rand).setAngleDeg(angle).scl(2);
 
-                if (TileMapCollisionsManager.canMove(getX() + mov.x, getY() + mov.y)) {
+                if (TileMapCollisionsManager.isWalkable(getX() + mov.x, getY() + mov.y)) {
                     setX(getX() + mov.x);
                     setY(getY() + mov.y);
                 }

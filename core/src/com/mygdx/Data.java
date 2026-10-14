@@ -1,7 +1,6 @@
 package com.mygdx;
 
 public class Data {
-
     public static final int RATIO_X = 16;
     public static final int RATIO_Y = 9;
     public static final int VIEWPORT_X = 64 * RATIO_X;
@@ -9,7 +8,9 @@ public class Data {
 
     public static int TILE = 32;
 
-    public static boolean debug = true;
+    public static boolean HITBOX_DEBUG = true;
+    public static boolean PRINT_DEBUG = true;
+
     public static boolean stopCamera = false;
     public static boolean dialogueActive = false;
     public static boolean exiting = false;
