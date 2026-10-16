@@ -30,6 +30,7 @@ import com.mygdx.resources.enums.TextureEnum;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 public class MapManager implements Telegraph {
     private final HashMap<String, Vector2> markersMap = new HashMap<>();
@@ -79,9 +80,9 @@ public class MapManager implements Telegraph {
         tiledMapRenderer.render();
     }
 
-    public TiledMap getMap() {
-        return map;
-    }
+    public TiledMap getMap() { return map; }
+    public int getCols(){ return getLayer("background").getHeight(); }
+    public int getRows(){ return getLayer("background").getWidth(); }
 
     private void loadBuildings(MapLayer buildingsLayer) throws IllegalStateException{
 
@@ -178,6 +179,15 @@ public class MapManager implements Telegraph {
 
     public Vector2 getMarker(String name){
         return Objects.requireNonNull(markersMap.get(name), "marker name is null in markersMap");
+    }
+
+    public Vector2 getRandomMarker(){
+        Random random = new Random();
+        return markersMap.values()
+                .stream()
+                .skip(random.nextInt(markersMap.size()))
+                .findFirst()
+                .orElseThrow();
     }
 
     @Override

@@ -53,7 +53,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-ai:1.8.1"
+        api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
     }
 }
 
@@ -70,7 +70,6 @@ project(":core") {
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         implementation "com.bladecoder.ink:blade-ink:1.2.0"
-        api "com.badlogicgames.gdx:gdx-ai:1.8.1"
         implementation 'com.github.raeleus.stripe:freetype:2.0.0'
         implementation 'com.github.raeleus.stripe:stripe:2.0.0'
 

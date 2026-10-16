@@ -12,28 +12,10 @@ import java.util.Set;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.Data;
 import com.mygdx.entities.helpers.GameActor;
 import com.mygdx.screens.ScreensManager;
 
 public class PathFinder {
-    public Path find(Vector2 start, Vector2 end) {
-        return Path.of(
-                new Vector2(Data.TILE * 50, Data.TILE * 25),
-                new Vector2(Data.TILE * 40, Data.TILE * 40),
-                new Vector2(Data.TILE * 60, Data.TILE * 30),
-                new Vector2(end.x, end.y)
-        );
-    }
-
-    private final GameActor from;
-    private final GameActor to;
-
-    private final int rows;
-    private final int cols;
-
-    private final float tileWidth;
-    private final float tileHeight;
 
     private static final int[][] DIRECTIONS = {
         { 0, 1 },   // Up
@@ -42,39 +24,20 @@ public class PathFinder {
         { 1, 0 }    // Right
     };
 
-    public PathFinder(
-            GameActor from,
-            GameActor to,
-            int rows,
-            int cols,
-            float tileWidth,
-            float tileHeight) {
-
-        this.from = from;
-        this.to = to;
-        this.rows = rows;
-        this.cols = cols;
-        this.tileWidth = tileWidth;
-        this.tileHeight = tileHeight;
-    }
-
-    public List<GridPoint2> findPath() {
+    public static Path find(GameActor from, Vector2 to){
         GridPoint2 start = actorToGrid(from);
-        GridPoint2 goal = actorToGrid(to);
+        GridPoint2 goal = vecToGrid(to);
 
-        if (!isInsideMap(start) || !isInsideMap(goal)) {
-            return Collections.emptyList();
+        if (IsOutsideMap(start) || IsOutsideMap(goal)) {
+            return Path.of();
         }
 
-        if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(start.y, start.x)
-                || !ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(goal.y, goal.x)) {
-            return Collections.emptyList();
+        if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(start.x, start.y)
+                || !ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(goal.x, goal.y)) {
+            return Path.of();
         }
 
-        PriorityQueue<Node> openSet =
-                new PriorityQueue<>(
-                    Comparator.comparingDouble(n -> n.f)
-                );
+        PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.f));
 
         Map<GridPoint2, Float> gScore = new HashMap<>();
         Map<GridPoint2, GridPoint2> cameFrom = new HashMap<>();
@@ -87,13 +50,12 @@ public class PathFinder {
             Node currentNode = openSet.poll();
             GridPoint2 current = currentNode.position;
 
-            // Ignore obsolete queue entries.
             if (closedSet.contains(current)) {
                 continue;
             }
 
             if (current.equals(goal)) {
-                return reconstructPath(cameFrom, current);
+                return Path.of(reconstructPath(cameFrom, current));
             }
 
             closedSet.add(current);
@@ -102,12 +64,11 @@ public class PathFinder {
                 int nextCol = current.x + direction[0];
                 int nextRow = current.y + direction[1];
 
-                if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(nextRow, nextCol)) {
+                if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(nextCol * 32, nextRow * 32)) {
                     continue;
                 }
 
-                GridPoint2 next =
-                        new GridPoint2(nextCol, nextRow);
+                GridPoint2 next = new GridPoint2(nextCol, nextRow);
 
                 if (closedSet.contains(next)) {
                     continue;
@@ -126,33 +87,38 @@ public class PathFinder {
             }
         }
 
-        // No route was found.
-        return Collections.emptyList();
+        return Path.of();
     }
 
-    private GridPoint2 actorToGrid(GameActor actor) {
-        float centerX = actor.getX() + actor.getWidth() / 2f;
-        float centerY = actor.getY() + actor.getHeight() / 2f;
+    public static Path find(GameActor from, GameActor to) {
+        return find(from, to.center);
+    }
 
-        int col = MathUtils.floor(centerX / tileWidth);
-        int row = MathUtils.floor(centerY / tileHeight);
+    private static GridPoint2 actorToGrid(GameActor actor) {
+        int col = MathUtils.floor(actor.center.x / 32);
+        int row = MathUtils.floor(actor.center.y / 32);
 
         return new GridPoint2(col, row);
     }
 
-    private boolean isInsideMap(GridPoint2 point) {
-        return point.x >= 0 && point.x < cols
-                && point.y >= 0 && point.y < rows;
+    private static GridPoint2 vecToGrid(Vector2 vec){
+        int col = MathUtils.floor(vec.x / 32);
+        int row = MathUtils.floor(vec.y / 32);
+
+        return new GridPoint2(col, row);
     }
 
-    private float heuristic(GridPoint2 a, GridPoint2 b) {
+    private static boolean IsOutsideMap(GridPoint2 point) {
+        return point.x < 0 || point.x >= ScreensManager.getCurrentPlayableScreen().getMapManager().getRows()
+                || point.y < 0 || point.y >= ScreensManager.getCurrentPlayableScreen().getMapManager().getCols();
+    }
+
+    private static float heuristic(GridPoint2 a, GridPoint2 b) {
         return Math.abs(a.x - b.x)
                 + Math.abs(a.y - b.y);
     }
 
-    private List<GridPoint2> reconstructPath(
-            Map<GridPoint2, GridPoint2> cameFrom,
-            GridPoint2 current) {
+    private static List<GridPoint2> reconstructPath( Map<GridPoint2, GridPoint2> cameFrom, GridPoint2 current) {
 
         List<GridPoint2> path = new ArrayList<>();
 
@@ -162,6 +128,7 @@ public class PathFinder {
         }
 
         Collections.reverse(path);
+        if(!path.isEmpty()) path.remove(0);
         return path;
     }
 

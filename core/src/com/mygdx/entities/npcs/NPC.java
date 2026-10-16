@@ -11,8 +11,11 @@ import com.mygdx.dialogues.Dialogue;
 import com.mygdx.entities.helpers.ScriptableActor;
 import com.mygdx.hitboxes.Hitbox;
 import com.mygdx.hitboxes.Tags;
+import com.mygdx.path.Path;
+import com.mygdx.path.PathFinder;
 import com.mygdx.resources.enums.AtlasEnum;
 import com.mygdx.resources.enums.TextureEnum;
+import com.mygdx.screens.ScreensManager;
 import com.mygdx.scripts.Script;
 
 public class NPC extends ScriptableActor {
@@ -24,6 +27,8 @@ public class NPC extends ScriptableActor {
     private Dialogue currentDialogue = null;
 
     private NpcUpdate onUpdate;
+
+    private boolean wander = true;
 
     public NPC(NPCBuilder npcBuilder) {
         super();
@@ -92,7 +97,11 @@ public class NPC extends ScriptableActor {
             if (!autoMovementManager.hasFinished())
                 animationManager
                         .setCurrentAnimation(TextureEnum.valueOf(name + "_" + autoMovementManager.getOrientation()));
-
+            else if(wander) {
+                Path p = PathFinder.find(this, ScreensManager.getCurrentPlayableScreen().getMapManager().getRandomMarker());
+                p.debugPath();
+                runPath(p);
+            }
         }
 
         animationManager.updateAnimation(delta);
