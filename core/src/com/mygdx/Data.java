@@ -10,6 +10,7 @@ public class Data {
 
     public static boolean HITBOX_DEBUG = true;
     public static boolean PRINT_DEBUG = true;
+    public static boolean PATH_DEBUG = true;
 
     public static boolean stopCamera = false;
     public static boolean dialogueActive = false;

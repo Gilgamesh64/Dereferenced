@@ -88,10 +88,9 @@ public class AutoMovementManager {
         orientation = "IDLE_" + orientation.split("_")[1];
 
         if (actor instanceof ScriptableActor sc) {
-            boolean hasActivePath = sc.getPath().running();
-            if (hasActivePath) {
+            if(sc.getPath() != null && sc.getPath().running())
                 sc.getPath().advance(sc);
-            } else if (sc.hasScript() && sc.isRunningScriptAction()) //if advancing path scripts are frozen
+            else if (sc.hasScript() && sc.isRunningScriptAction()) //if advancing path scripts are frozen
                 sc.proceed();
         }
         if (onEnd != null) {

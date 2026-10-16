@@ -99,7 +99,7 @@ public class NPC extends ScriptableActor {
                         .setCurrentAnimation(TextureEnum.valueOf(name + "_" + autoMovementManager.getOrientation()));
             else if(wander) {
                 Path p = PathFinder.find(this, ScreensManager.getCurrentPlayableScreen().getMapManager().getRandomMarker());
-                p.debugPath();
+                if(Data.PATH_DEBUG) p.debugPath();
                 runPath(p);
             }
         }
