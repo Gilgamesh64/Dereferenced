@@ -15,37 +15,37 @@ import com.mygdx.screens.menus.SettingsScreen;
 
 import java.util.HashMap;
 
-public class ScreensManager {
+public class ScreenManager {
 
-    private static final HashMap<Screens, GenericScreen> map = new HashMap<>();
-    private static Screens lastPlayableActiveScreenEnum;
+    private static final HashMap<ScreenEnum, GenericScreen> map = new HashMap<>();
+    private static ScreenEnum lastPlayableActiveScreenEnum;
 
-    public static GenericScreen getScreen(Screens name) {
+    public static GenericScreen getScreen(ScreenEnum name) {
         if (map.get(name) == null) {
             switch (name) {
                 case MENU_SCREEN -> {
-                    map.put(Screens.MENU_SCREEN, new MenuScreen());
+                    map.put(ScreenEnum.MENU_SCREEN, new MenuScreen());
                 }
                 case PAUSE_SCREEN -> {
-                    map.put(Screens.PAUSE_SCREEN, new PauseScreen());
+                    map.put(ScreenEnum.PAUSE_SCREEN, new PauseScreen());
                 }
                 case SETTINGS -> {
-                    map.put(Screens.SETTINGS, new SettingsScreen());
+                    map.put(ScreenEnum.SETTINGS, new SettingsScreen());
                 }
                 case REFLECTION_ARENA -> {
-                    map.put(Screens.REFLECTION_ARENA, new ReflectionArena());
+                    map.put(ScreenEnum.REFLECTION_ARENA, new ReflectionArena());
                 }
                 case SLUMS -> {
-                    map.put(Screens.SLUMS, new Slums());
+                    map.put(ScreenEnum.SLUMS, new Slums());
                 }
                 case PARK -> {
-                    map.put(Screens.PARK, new Park());
+                    map.put(ScreenEnum.PARK, new Park());
                 }
                 case RICH_DISTRICT -> {
-                    map.put(Screens.RICH_DISTRICT, new RichDistrict());
+                    map.put(ScreenEnum.RICH_DISTRICT, new RichDistrict());
                 }
                 case INSIDE -> {
-                    map.put(Screens.INSIDE, new Inside());
+                    map.put(ScreenEnum.INSIDE, new Inside());
                 }
             }
         }
@@ -54,11 +54,11 @@ public class ScreensManager {
         return map.get(name);
     }
 
-    public static PlayableScreen getPlayableScreen(Screens screenName) {
+    public static PlayableScreen getPlayableScreen(ScreenEnum screenName) {
         return (PlayableScreen) getScreen(screenName);
     }
 
-    public static boolean isNull(Screens screenName) {
+    public static boolean isNull(ScreenEnum screenName) {
         return map.get(screenName) == null;
     }
 
@@ -66,18 +66,18 @@ public class ScreensManager {
         return getPlayableScreen(getLastPlayableActiveScreenEnum());
     }
 
-    public static Screens getLastPlayableActiveScreenEnum() {
+    public static ScreenEnum getLastPlayableActiveScreenEnum() {
         return lastPlayableActiveScreenEnum;
     }
 
-    public static void setScreen(Screens s) {
+    public static void setScreen(ScreenEnum s) {
         RM.get().stopAllAudio();
-        GarbageCollection.getInstance().setScreen(ScreensManager.getScreen(s));
+        GarbageCollection.getInstance().setScreen(ScreenManager.getScreen(s));
     }
 
-    public static void setScreen(Screens s, String doorName) {
+    public static void setScreen(ScreenEnum s, String doorName) {
         RM.get().stopAllAudio();
-        GarbageCollection.getInstance().setScreen(ScreensManager.getScreen(s));
+        GarbageCollection.getInstance().setScreen(ScreenManager.getScreen(s));
         if (GarbageCollection.getInstance().getScreen() instanceof PlayableScreen ps) {
             ps.exitFrom(doorName);
         }

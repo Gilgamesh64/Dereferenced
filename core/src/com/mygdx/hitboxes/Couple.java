@@ -1,8 +1,8 @@
 package com.mygdx.hitboxes;
 
 public class Couple {
-    private Hitbox h;
-    private Collider r;
+    private final Hitbox h;
+    private final Collider r;
 
     public Couple(Hitbox hitbox, Collider collider) {
         h = hitbox;

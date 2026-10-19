@@ -9,8 +9,8 @@ public class TileReplacementManager {
     private TiledMapTile blockerTile = null;
     private TiledMapTile blockableTile = null;
     private boolean isBlocked = false;
-    private TileReplacementEnum category;
-    private TiledMap map;
+    private final TileReplacementEnum category;
+    private final TiledMap map;
 
     public TileReplacementManager(TiledMap map, TileReplacementEnum category, TiledMapTile blocker) {
         this.map = map;

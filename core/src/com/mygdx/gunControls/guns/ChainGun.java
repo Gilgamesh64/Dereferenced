@@ -11,9 +11,14 @@ import com.mygdx.resources.enums.AtlasEnum;
 import com.mygdx.resources.enums.TextureEnum;
 
 public class ChainGun extends BaseGun {
-    private int bullets = 100, mag = 100, reloadAmount = 1;
-    private float waitingTime = 90f, timeOn = 10f, timeOff = 3f, cooldown = 3f;
-    private Object reload = new Object();
+    private int bullets = 100;
+    private final int mag = 100;
+    private final int reloadAmount = 1;
+    private final float waitingTime = 90f;
+    private final float timeOn = 10f;
+    private final float timeOff = 3f;
+    private final float cooldown = 3f;
+    private final Object reload = new Object();
 
     /**
      * ChainGun class

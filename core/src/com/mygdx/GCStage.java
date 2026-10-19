@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class GCStage extends Stage {
     private static GCStage instance;
-    private MessageDispatcher stageMsg;
+    private final MessageDispatcher stageMsg;
     private Player player;
 
     public GCStage(Viewport v) {

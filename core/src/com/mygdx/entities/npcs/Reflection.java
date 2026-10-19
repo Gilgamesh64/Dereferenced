@@ -12,16 +12,17 @@ import com.mygdx.entities.Scope;
 import com.mygdx.entities.npcs.states.StateController;
 import com.mygdx.gunControls.projectiles.Projectile;
 import com.mygdx.hitboxes.Tags;
+import com.mygdx.map.MapManager;
 import com.mygdx.messages.MSG;
 import com.mygdx.resources.enums.TextureEnum;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenManager;
 
 import java.util.Random;
 
 public class Reflection extends NPC {
-    private Scope scope;
+    private final Scope scope;
 
-    private StateController stateController;
+    private final StateController stateController;
 
     public Reflection(NPCBuilder builder) {
         super(builder);
@@ -85,7 +86,7 @@ public class Reflection extends NPC {
                 getActions().clear();
             }
             case FOLLOW_PLAYER -> {
-                if (ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(playerPos.x, playerPos.y)) {
+                if (MapManager.get().isWalkable(playerPos.x, playerPos.y)) {
                     Action movement = Actions.moveTo(playerPos.x, playerPos.y, 5);
                     addAction(movement);
                 }
@@ -95,7 +96,7 @@ public class Reflection extends NPC {
                 }
             }
             case CIRLE_AROUND -> {
-                if (ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(playerPos.x, playerPos.y)) {
+                if (MapManager.get().isWalkable(playerPos.x, playerPos.y)) {
 
                 }
                 System.out.println("CIRCLING");
@@ -106,7 +107,7 @@ public class Reflection extends NPC {
                 float rand = new Random().nextFloat() % 0.8f;
                 Vector2 mov = new Vector2(1, rand).setAngleDeg(angle).scl(2);
 
-                if (ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(getX() + mov.x, getY() + mov.y)) {
+                if (MapManager.get().isWalkable(getX() + mov.x, getY() + mov.y)) {
                     setX(getX() + mov.x);
                     setY(getY() + mov.y);
                 }

@@ -4,7 +4,7 @@ import com.mygdx.entities.helpers.ScriptableActor;
 import com.mygdx.messages.MSG;
 
 public class SndAction implements ScriptAction {
-    private MSG msg;
+    private final MSG msg;
 
     public SndAction(MSG m) {
         msg = m;

@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.resources.RM;
 import com.mygdx.resources.enums.LangEnum;
 import com.mygdx.savings.SavingsManager;
-import com.mygdx.screens.Screens;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenEnum;
+import com.mygdx.screens.ScreenManager;
 import com.mygdx.screens.generic.GuiScreen;
 
 public class MenuScreen extends GuiScreen {
@@ -35,7 +35,7 @@ public class MenuScreen extends GuiScreen {
         playButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                ScreensManager.setScreen(SavingsManager.getSavings().getLastRoom());
+                ScreenManager.setScreen(SavingsManager.getSavings().getLastRoom());
                 return true;
             }
         });
@@ -45,7 +45,7 @@ public class MenuScreen extends GuiScreen {
         settingsButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                ScreensManager.setScreen(Screens.SETTINGS);
+                ScreenManager.setScreen(ScreenEnum.SETTINGS);
                 return true;
             }
         });

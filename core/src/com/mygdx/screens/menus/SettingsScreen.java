@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.Data;
 import com.mygdx.resources.RM;
 import com.mygdx.resources.enums.LangEnum;
-import com.mygdx.screens.Screens;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenEnum;
+import com.mygdx.screens.ScreenManager;
 import com.mygdx.screens.generic.GuiScreen;
 
 public class SettingsScreen extends GuiScreen {
@@ -63,7 +63,7 @@ public class SettingsScreen extends GuiScreen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 LangEnum.setCurrent(LangEnum.valueOf(lang.getSelected()));
-                ScreensManager.setScreen(Screens.MENU_SCREEN);
+                ScreenManager.setScreen(ScreenEnum.MENU_SCREEN);
 
                 return true;
             }

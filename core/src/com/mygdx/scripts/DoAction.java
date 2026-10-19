@@ -4,7 +4,7 @@ import com.mygdx.entities.helpers.ScriptableActor;
 import com.mygdx.resources.enums.ScriptEnum;
 
 public class DoAction implements ScriptAction {
-    private ScriptEnum script;
+    private final ScriptEnum script;
 
     public DoAction(ScriptEnum script) {
         this.script = script;

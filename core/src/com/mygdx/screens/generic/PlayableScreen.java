@@ -17,8 +17,8 @@ import com.mygdx.messages.MSG;
 import com.mygdx.resources.enums.MapEnum;
 import com.mygdx.resources.enums.TextureEnum;
 import com.mygdx.savings.SavingsManager;
-import com.mygdx.screens.Screens;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenEnum;
+import com.mygdx.screens.ScreenManager;
 
 /**
  * generic abstract class for every playable screen
@@ -32,7 +32,7 @@ public abstract class PlayableScreen extends GenericScreen {
 
     protected Player player;
 
-    private MapEnum name;
+    private final MapEnum name;
 
     protected PlayableScreen(MapEnum map) {
         super();
@@ -60,6 +60,7 @@ public abstract class PlayableScreen extends GenericScreen {
 
         HitboxHandler.set(hitboxHandler);
         Hud.set(hud);
+        MapManager.set(mapManager);
 
         CameraController.initCamera();
 
@@ -78,7 +79,7 @@ public abstract class PlayableScreen extends GenericScreen {
     public void render(float delta) {
         super.render(delta);
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-            ScreensManager.setScreen(Screens.PAUSE_SCREEN);
+            ScreenManager.setScreen(ScreenEnum.PAUSE_SCREEN);
             return;
         }
         if (Gdx.input.isKeyJustPressed(Keys.U)) {

@@ -5,8 +5,8 @@ import com.mygdx.Logger;
 import com.mygdx.resources.RM;
 import com.mygdx.resources.ResourceManager;
 import com.mygdx.savings.SavingsManager;
-import com.mygdx.screens.Screens;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenEnum;
+import com.mygdx.screens.ScreenManager;
 
 public class GarbageCollection extends Game {
 
@@ -33,7 +33,7 @@ public class GarbageCollection extends Game {
         SavingsManager.load();
         Logger.init();
 
-        setScreen(ScreensManager.getScreen(Screens.MENU_SCREEN));
+        setScreen(ScreenManager.getScreen(ScreenEnum.MENU_SCREEN));
     }
 
     @Override

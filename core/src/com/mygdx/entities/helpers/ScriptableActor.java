@@ -20,8 +20,8 @@ public class ScriptableActor extends GameActor {
     public MSG listeningMSG;
     protected Script script;
     protected Path path;
-    private Table dialTable;
-    private Label dial = new Label("", RM.get().skin().get("small_dial", Label.LabelStyle.class));
+    private final Table dialTable;
+    private final Label dial = new Label("", RM.get().skin().get("small_dial", Label.LabelStyle.class));
 
 
     public ScriptableActor() {

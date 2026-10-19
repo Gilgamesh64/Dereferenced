@@ -14,7 +14,7 @@ import com.mygdx.resources.enums.TextureEnum;
 import java.util.EnumMap;
 
 public class AnimationManager {
-    private EnumMap<TextureEnum, Animation<TextureRegion>> animationMap = new EnumMap<>(TextureEnum.class);
+    private final EnumMap<TextureEnum, Animation<TextureRegion>> animationMap = new EnumMap<>(TextureEnum.class);
 
     private TextureEnum currentAnimation;
     private TextureRegion currentFrame;
@@ -29,7 +29,7 @@ public class AnimationManager {
 
     private boolean paused = false;
     private boolean alreadyPausedOnce = false;
-    private GameActor pauser = new GameActor();
+    private final GameActor pauser = new GameActor();
 
     private float defaultDelay = 0;
     private float currentDelay = 0;

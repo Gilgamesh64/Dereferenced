@@ -19,8 +19,8 @@ import java.util.Map;
 public class Inventory {
 
     public PopTable table;
-    private Stage stage;
-    private Label moneyLabel;
+    private final Stage stage;
+    private final Label moneyLabel;
 
     public Inventory(Stage stage) {
         this.stage = stage;

@@ -6,7 +6,7 @@ import com.mygdx.entities.helpers.ScriptableActor;
 import com.mygdx.resources.enums.DialogueEnum;
 
 public class TellAction implements ScriptAction {
-    private DialogueEnum story;
+    private final DialogueEnum story;
 
     public TellAction(DialogueEnum story) {
         this.story = story;

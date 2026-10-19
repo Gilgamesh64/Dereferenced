@@ -15,7 +15,8 @@ public class GunController extends Actor {
     private static GunController instance;
     private final ArrayList<BaseGun> gunlist;
     private int gunIndex;
-    private BaseGun currentGun, dummyGun;
+    private BaseGun currentGun;
+    private final BaseGun dummyGun;
 
     private GunController() {
         gunlist = new ArrayList<>();

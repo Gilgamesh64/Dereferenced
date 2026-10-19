@@ -16,7 +16,7 @@ import com.mygdx.resources.enums.TextureEnum;
 
 public class Scope extends GameActor {
     public boolean hitplayer = false;
-    private Sprite sprite;
+    private final Sprite sprite;
     private Hitbox hitbox = new Hitbox();
     private boolean isFighting = GCStage.get().getPlayer().isFighting();
 

@@ -7,7 +7,7 @@ public class AbilityChargeMeter {
     private static float secondsToFull = 10;
 
     private static float charge = 0f;
-    private static float chargeRate = 1f / secondsToFull;
+    private static final float chargeRate = 1f / secondsToFull;
 
     public static void update(float delta) {
         charge = Math.min(1f, charge + chargeRate * delta);

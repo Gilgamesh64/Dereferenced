@@ -4,7 +4,7 @@ import com.mygdx.entities.helpers.ScriptableActor;
 
 public class SayAction implements ScriptAction {
 
-    private String text;
+    private final String text;
 
     public SayAction(String text) {
         this.text = text;

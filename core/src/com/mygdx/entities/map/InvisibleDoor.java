@@ -6,8 +6,8 @@ import com.mygdx.GCStage;
 import com.mygdx.entities.map.doors.Door;
 import com.mygdx.hitboxes.Hitbox;
 import com.mygdx.hitboxes.Tags;
-import com.mygdx.screens.Screens;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenEnum;
+import com.mygdx.screens.ScreenManager;
 
 public class InvisibleDoor extends Door {
 
@@ -37,7 +37,7 @@ public class InvisibleDoor extends Door {
 
             GCStage.get().getPlayer().movAbs(insideCoords, () -> {
                 Data.exiting = true;
-                ScreensManager.setScreen(Screens.valueOf(dst.split("-")[0]), dst);
+                ScreenManager.setScreen(ScreenEnum.valueOf(dst.split("-")[0]), dst);
             });
         });
         hitbox.register();

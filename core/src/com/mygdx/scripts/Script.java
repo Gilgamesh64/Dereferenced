@@ -12,16 +12,16 @@ import java.util.ArrayList;
 
 public class Script {
 
-    private ArrayList<ScriptAction> actions = new ArrayList<>();
+    private final ArrayList<ScriptAction> actions = new ArrayList<>();
 
     public Script(ScriptEnum script) {
         try (var br = new BufferedReader(new FileReader(script.path))) {
             br.lines().forEach(line -> {
                         int firstSpaceIndex = line.contains(" ") ? line.indexOf(" ") : line.length();
                         String func = line.substring(0, firstSpaceIndex);
-                        String[] args = line.length() != firstSpaceIndex ? line.substring(firstSpaceIndex + 1, line.length()).replaceAll(" ", "").split(",") : new String[] {};
+                        String[] args = line.length() != firstSpaceIndex ? line.substring(firstSpaceIndex + 1).replaceAll(" ", "").split(",") : new String[] {};
 
-                        String stringified = line.length() != firstSpaceIndex ? line.substring(firstSpaceIndex + 1, line.length()).replaceAll("\"", "") : "";
+                        String stringified = line.length() != firstSpaceIndex ? line.substring(firstSpaceIndex + 1).replaceAll("\"", "") : "";
                         actions.add(
                                 switch (func) {
                                     case "MOV" -> new MovAction(Float.parseFloat(args[0]), Float.parseFloat(args[1]), false);

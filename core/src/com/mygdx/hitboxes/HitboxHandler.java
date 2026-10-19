@@ -64,7 +64,7 @@ public class HitboxHandler {
     }
 
     public void setContact(Collider r, Hitbox h, boolean value) {
-        if (contacts.replace(new Couple(h, r), !value, value) == false)
+        if (!contacts.replace(new Couple(h, r), !value, value))
             return;
 
         if (value) {

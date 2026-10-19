@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class MapManager implements Telegraph {
+    private static MapManager instance;
     private final HashMap<String, Vector2> markersMap = new HashMap<>();
     private final TiledMapRenderer tiledMapRenderer;
     private final TiledMap map;
@@ -41,31 +42,32 @@ public class MapManager implements Telegraph {
     private boolean fightTransitionInCooldown = false;
 
     public MapManager(MapEnum e) {
+        instance = this;
         map = RM.get().getMap(e);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
-        MapLayer doorLayer = map.getLayers().get("doors");
+        MapLayer doorLayer = getLayer("doors");
         if (doorLayer == null && Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no door layer right?");
 
         else
             loadDoors(doorLayer);
 
-        MapLayer buildingsLayer = map.getLayers().get("buildings");
+        MapLayer buildingsLayer = getLayer("buildings");
         if (buildingsLayer == null && Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no buildings layer right?");
 
         else
             loadBuildings(buildingsLayer);
 
-        MapLayer componentsLayer = map.getLayers().get("components");
+        MapLayer componentsLayer = getLayer("components");
         if (componentsLayer == null && Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no components layer right?");
 
         else
             loadComponents(componentsLayer);
 
-        MapLayer markersLayer = map.getLayers().get("markers");
+        MapLayer markersLayer = getLayer("markers");
         if (markersLayer == null && Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no markers layer right?");
 
@@ -75,14 +77,18 @@ public class MapManager implements Telegraph {
         loadReplacers();
     }
 
+    public static MapManager get() {return instance;}
+
+    public static void set(MapManager mapManager) { MapManager.instance = mapManager; }
+
     public void render(OrthographicCamera camera) {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
     }
 
     public TiledMap getMap() { return map; }
-    public int getCols(){ return getLayer("background").getHeight(); }
-    public int getRows(){ return getLayer("background").getWidth(); }
+    public int getCols(){ return getTileLayer("background").getHeight(); }
+    public int getRows(){ return getTileLayer("background").getWidth(); }
 
     private void loadBuildings(MapLayer buildingsLayer) throws IllegalStateException{
 
@@ -91,9 +97,6 @@ public class MapManager implements Telegraph {
                 Rectangle rect = rectObj.getRectangle();
 
                 TextureEnum texture = TextureEnum.valueOf(obj.getName());
-                if (texture == null)
-                    throw new IllegalStateException("texture with name: " + obj.getName()
-                            + ". Not found in TextureEnum. \nMake sure to add the entry");
 
                 TextureRegion region = RM.get().getAtlas(AtlasEnum.BUILDINGS).findRegion(texture.path);
                 if (region == null) {
@@ -115,9 +118,6 @@ public class MapManager implements Telegraph {
                 Rectangle rect = rectObj.getRectangle();
 
                 TextureEnum texture = TextureEnum.valueOf(obj.getName());
-                if (texture == null)
-                    throw new IllegalStateException("texture with name: " + obj.getName()
-                            + ". Not found in TextureEnum. \nMake sure to add the entry");
 
                 TextureRegion region = RM.get().getAtlas(AtlasEnum.COMPONENTS).findRegion(texture.path);
                 if (region == null) {
@@ -225,7 +225,8 @@ public class MapManager implements Telegraph {
         return tile;
     }
 
-    public TiledMapTileLayer getLayer(String name){
+
+    public TiledMapTileLayer getTileLayer(String name){
         MapLayer layer = map.getLayers().get(name);
         if(layer == null)
             throw new IllegalArgumentException("layer not found for name:" + name);
@@ -233,6 +234,12 @@ public class MapManager implements Telegraph {
             return tmtl;
         }
         throw new IllegalStateException("layer with name: " + name + ". Is not TiledMapTileLayer");
+    }
+    public MapLayer getLayer(String name){
+        MapLayer layer = map.getLayers().get(name);
+        if(layer == null)
+            throw new IllegalArgumentException("layer not found for name:" + name);
+        return layer;
     }
 
     /**
@@ -242,7 +249,7 @@ public class MapManager implements Telegraph {
      * @throws IllegalStateException if anything is null
      */
     public boolean isWalkable(float x, float y) throws IllegalStateException {
-        TiledMapTileLayer background = getLayer("background");
+        TiledMapTileLayer background = getTileLayer("background");
 
         TiledMapTile tile = getTile(x, y, background);
 
@@ -250,7 +257,7 @@ public class MapManager implements Telegraph {
     }
 
     public boolean changeFightingState() {
-        TiledMapTile playerTile = getTile(GCStage.get().getPlayer().getX(), GCStage.get().getPlayer().getY(), getLayer("background"));
+        TiledMapTile playerTile = getTile(GCStage.get().getPlayer().getX(), GCStage.get().getPlayer().getY(), getTileLayer("background"));
         if (!fightTransitionInCooldown && playerTile.getProperties().containsKey("transition")) {
             fightTransitionInCooldown = true;
             return true;

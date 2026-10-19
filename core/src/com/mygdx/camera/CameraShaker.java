@@ -34,7 +34,7 @@ import com.badlogic.gdx.math.Vector3;
 public class CameraShaker {
 
     public Vector3 origPosition;
-    private Camera camera;
+    private final Camera camera;
     private boolean isShaking = false;
     private float origShakeRadius;
     private float minimumShakeRadius;
@@ -42,7 +42,7 @@ public class CameraShaker {
     private float shakeRadius;
     private float randomAngle;
     private float timer;
-    private Vector3 offset;
+    private final Vector3 offset;
     private Vector3 currentPosition;
 
     /**

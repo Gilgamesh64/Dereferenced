@@ -3,8 +3,9 @@ package com.mygdx.scripts;
 import com.mygdx.entities.helpers.ScriptableActor;
 
 public class MovAction implements ScriptAction {
-    private float x, y;
-    private boolean relative;
+    private final float x;
+    private final float y;
+    private final boolean relative;
 
     public MovAction(float x, float y, boolean relative) {
         this.x = x;

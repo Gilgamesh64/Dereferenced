@@ -10,7 +10,7 @@ public enum GunsEnum {
     USBLADE(new Usblade(), SavingsManager.getSavings().getSelectedGun(1));
 
     private final BaseGun gun;
-    private boolean active;
+    private final boolean active;
 
     GunsEnum(BaseGun gun, boolean active) {
         this.gun = gun;

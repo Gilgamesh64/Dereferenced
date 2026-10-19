@@ -1,6 +1,6 @@
 package com.mygdx.screens;
 
-public enum Screens {
+public enum ScreenEnum {
     MENU_SCREEN,
     PAUSE_SCREEN,
     SETTINGS,

@@ -13,7 +13,8 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.entities.helpers.GameActor;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.map.MapManager;
+import com.mygdx.screens.ScreenManager;
 
 public class PathFinder {
 
@@ -32,8 +33,8 @@ public class PathFinder {
             return Path.of();
         }
 
-        if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(start.x, start.y)
-                || !ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(goal.x, goal.y)) {
+        if (!MapManager.get().isWalkable(start.x, start.y)
+                || !MapManager.get().isWalkable(goal.x, goal.y)) {
             return Path.of();
         }
 
@@ -64,7 +65,7 @@ public class PathFinder {
                 int nextCol = current.x + direction[0];
                 int nextRow = current.y + direction[1];
 
-                if (!ScreensManager.getCurrentPlayableScreen().getMapManager().isWalkable(nextCol * 32, nextRow * 32)) {
+                if (!MapManager.get().isWalkable(nextCol * 32, nextRow * 32)) {
                     continue;
                 }
 
@@ -109,8 +110,8 @@ public class PathFinder {
     }
 
     private static boolean IsOutsideMap(GridPoint2 point) {
-        return point.x < 0 || point.x >= ScreensManager.getCurrentPlayableScreen().getMapManager().getRows()
-                || point.y < 0 || point.y >= ScreensManager.getCurrentPlayableScreen().getMapManager().getCols();
+        return point.x < 0 || point.x >= MapManager.get().getRows()
+                || point.y < 0 || point.y >= MapManager.get().getCols();
     }
 
     private static float heuristic(GridPoint2 a, GridPoint2 b) {

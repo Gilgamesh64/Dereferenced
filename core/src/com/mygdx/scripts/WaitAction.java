@@ -5,7 +5,7 @@ import com.mygdx.entities.helpers.ScriptableActor;
 
 public class WaitAction implements ScriptAction {
 
-    private float time;
+    private final float time;
 
     public WaitAction(Float time) {
         this.time = time;

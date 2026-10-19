@@ -4,12 +4,13 @@ import com.mygdx.Data;
 import com.mygdx.GCStage;
 import com.mygdx.entities.npcs.NPCBuilder;
 import com.mygdx.entities.npcs.Reflection;
+import com.mygdx.map.MapManager;
 import com.mygdx.messages.MSG;
 import com.mygdx.resources.RM;
 import com.mygdx.resources.enums.AnimationEnum;
 import com.mygdx.resources.enums.MapEnum;
 import com.mygdx.resources.enums.SoundEnum;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenManager;
 import com.mygdx.screens.generic.PlayableScreen;
 
 public class ReflectionArena extends PlayableScreen {
@@ -32,7 +33,7 @@ public class ReflectionArena extends PlayableScreen {
     public void render(float delta) {
         super.render(delta);
 
-        if (ScreensManager.getCurrentPlayableScreen().getMapManager().changeFightingState()) {
+        if (MapManager.get().changeFightingState()) {
             GCStage.get().send(MSG.BLOCK_WALLS);
             GCStage.get().send(MSG.SWAP_FIGHT_STATE);
 

@@ -9,7 +9,7 @@ public enum TileReplacementEnum {
     WALL(MSG.BLOCK_WALLS),
     SWAP_FIGHT_STATE(MSG.SWAP_FIGHT_STATE);
 
-    private MSG msg;
+    private final MSG msg;
 
     TileReplacementEnum(MSG msg) {
         this.msg = msg;

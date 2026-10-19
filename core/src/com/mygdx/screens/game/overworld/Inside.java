@@ -10,11 +10,12 @@ import com.mygdx.resources.enums.ScriptEnum;
 import com.mygdx.screens.generic.PlayableScreen;
 
 public class Inside extends PlayableScreen {
-    private int spawnX = Data.TILE * 9 + 24, spawnY = Data.TILE;
+    private final int spawnX = Data.TILE * 9 + 24;
+    private final int spawnY = Data.TILE;
 
-    private NPCBuilder poorPeopleBuilder = NPCBuilder.create(AnimationEnum.JERKINS, spawnX, spawnY)
+    private final NPCBuilder poorPeopleBuilder = NPCBuilder.create(AnimationEnum.JERKINS, spawnX, spawnY)
             .autoStartedScript(ScriptEnum.CANTEEN);
-    private Action spawnNPC = Actions.forever(Actions.sequence(
+    private final Action spawnNPC = Actions.forever(Actions.sequence(
             Actions.run(this::getSpawnRate),
             Actions.delay(getSpawnRate()),
             Actions.run(() -> stage.addActor(poorPeopleBuilder.build()))

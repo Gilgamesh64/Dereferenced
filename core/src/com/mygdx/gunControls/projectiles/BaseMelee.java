@@ -16,7 +16,7 @@ public class BaseMelee extends Actor {
     protected float angle, speed, end;
     protected Collider collider = new Collider();
     protected ObjectInfo info;
-    private boolean flipped;
+    private final boolean flipped;
 
     public BaseMelee(Sprite s, Vector2 origin, float angle, float arc, float speed, boolean flipped) {
         this.s = s;

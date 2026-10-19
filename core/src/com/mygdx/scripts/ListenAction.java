@@ -5,7 +5,7 @@ import com.mygdx.entities.helpers.ScriptableActor;
 import com.mygdx.messages.MSG;
 
 public class ListenAction implements ScriptAction {
-    private MSG msg;
+    private final MSG msg;
     private int maxWaitingSeconds = 30;
 
     public ListenAction(MSG m) {

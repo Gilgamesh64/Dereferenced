@@ -6,13 +6,13 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.GCStage;
 import com.mygdx.Money;
 import com.mygdx.quest.Quests;
-import com.mygdx.screens.Screens;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenEnum;
+import com.mygdx.screens.ScreenManager;
 
 import java.util.EnumMap;
 
 public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
-    private Screens lastRoom;
+    private ScreenEnum lastRoom;
     private boolean fightging;
     private Vector2 lastRoomCoordinates = new Vector2();
     private boolean[] flags, selectedGuns = new boolean[] {true, true};
@@ -20,8 +20,8 @@ public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
     private EnumMap<Quests, String> quests = new EnumMap<>(Quests.class);
 
     public void updateData() {
-        lastRoom = ScreensManager.getLastPlayableActiveScreenEnum();
-        lastRoomCoordinates = ScreensManager.getPlayableScreen(ScreensManager.getLastPlayableActiveScreenEnum())
+        lastRoom = ScreenManager.getLastPlayableActiveScreenEnum();
+        lastRoomCoordinates = ScreenManager.getPlayableScreen(ScreenManager.getLastPlayableActiveScreenEnum())
                 .getPlayerCoordinates();
         fightging = GCStage.get().getPlayer().isFighting();
         flags = new boolean[] {true, true, false};
@@ -45,7 +45,7 @@ public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
 
     @Override
     public void read(Json json, JsonValue jsonData) {
-        lastRoom = Screens.valueOf(jsonData.getString("LAST_ROOM"));
+        lastRoom = ScreenEnum.valueOf(jsonData.getString("LAST_ROOM"));
 
         lastRoomCoordinates.x = jsonData.get("PLAYER").getFloat("x");
         lastRoomCoordinates.y = jsonData.get("PLAYER").getFloat("y");
@@ -72,7 +72,7 @@ public class Savings implements com.badlogic.gdx.utils.Json.Serializable {
         return lastRoomCoordinates;
     }
 
-    public Screens getLastRoom() {
+    public ScreenEnum getLastRoom() {
         return lastRoom;
     }
 

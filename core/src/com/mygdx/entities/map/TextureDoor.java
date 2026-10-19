@@ -11,8 +11,8 @@ import com.mygdx.hitboxes.Tags;
 import com.mygdx.resources.RM;
 import com.mygdx.resources.enums.AtlasEnum;
 import com.mygdx.resources.enums.TextureEnum;
-import com.mygdx.screens.Screens;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenEnum;
+import com.mygdx.screens.ScreenManager;
 
 public class TextureDoor extends Door {
 
@@ -55,7 +55,7 @@ public class TextureDoor extends Door {
             animationManager.setCurrentAnimation(openingEnum);
             GCStage.get().getPlayer().movAbs(insideCoords, () -> {
                 Data.exiting = true;
-                ScreensManager.setScreen(Screens.valueOf(dst.split("-")[0]), dst);
+                ScreenManager.setScreen(ScreenEnum.valueOf(dst.split("-")[0]), dst);
 
             });
         });

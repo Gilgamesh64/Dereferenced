@@ -3,10 +3,10 @@ package com.mygdx.messages;
 import java.util.HashMap;
 
 public class LockedInfo {
-    private HashMap<String, Boolean> boolInfo;
-    private HashMap<String, Integer> integerInfo;
-    private HashMap<String, Float> floatInfo;
-    private HashMap<String, String> stringInfo;
+    private final HashMap<String, Boolean> boolInfo;
+    private final HashMap<String, Integer> integerInfo;
+    private final HashMap<String, Float> floatInfo;
+    private final HashMap<String, String> stringInfo;
 
     /**
      * Create locked info based on an ObjectInfo instance.

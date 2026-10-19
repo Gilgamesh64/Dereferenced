@@ -5,8 +5,9 @@ import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.AnimationManager;
+import com.mygdx.map.MapManager;
 import com.mygdx.movement.AutoMovementManager;
-import com.mygdx.screens.ScreensManager;
+import com.mygdx.screens.ScreenManager;
 
 public class GameActor extends Actor implements Telegraph {
 
@@ -52,7 +53,7 @@ public class GameActor extends Actor implements Telegraph {
     }
 
     public void movAbs(String destination) {
-        Vector2 coords = ScreensManager.getCurrentPlayableScreen().getMapManager().getMarker(destination);
+        Vector2 coords = MapManager.get().getMarker(destination);
 
         if (coords == null) return;
         movAbs(coords);

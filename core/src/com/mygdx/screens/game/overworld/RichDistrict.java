@@ -4,12 +4,9 @@ import com.mygdx.Data;
 import com.mygdx.GCStage;
 import com.mygdx.entities.npcs.NPC;
 import com.mygdx.entities.npcs.NPCBuilder;
-import com.mygdx.path.PathFinder;
 import com.mygdx.resources.enums.AnimationEnum;
 import com.mygdx.resources.enums.MapEnum;
-import com.mygdx.screens.ScreensManager;
 import com.mygdx.screens.generic.PlayableScreen;
-import com.mygdx.path.Path;
 
 public class RichDistrict extends PlayableScreen {
 

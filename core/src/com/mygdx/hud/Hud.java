@@ -23,13 +23,13 @@ import com.mygdx.resources.RM;
 public class Hud implements Disposable {
     private static Hud instance;
     private final Stage stage;
-    private Table table;
-    private Label fps;
+    private final Table table;
+    private final Label fps;
     private Label moneyPopup;
-    private Label debugData;
-    private Image healthBar;
-    private Inventory inventory;
-    private AbilityChargeWidget abilityBar;
+    private final Label debugData;
+    private final Image healthBar;
+    private final Inventory inventory;
+    private final AbilityChargeWidget abilityBar;
     public Hud(InputMultiplexer mux) {
         FitViewport viewport = new FitViewport(Data.VIEWPORT_X, Data.VIEWPORT_Y, new OrthographicCamera());
         stage = new Stage(viewport);
