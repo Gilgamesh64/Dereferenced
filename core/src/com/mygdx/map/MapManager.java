@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.Data;
@@ -30,7 +31,6 @@ import com.mygdx.resources.enums.TextureEnum;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Random;
 
 public class MapManager implements Telegraph {
     private static MapManager instance;
@@ -38,6 +38,7 @@ public class MapManager implements Telegraph {
     private final TiledMapRenderer tiledMapRenderer;
     private final TiledMap map;
     private final ArrayList<TileReplacementManager> tileReplace = new ArrayList<>();
+    private final TiledMapTileLayer background;
 
     private boolean fightTransitionInCooldown = false;
 
@@ -45,34 +46,35 @@ public class MapManager implements Telegraph {
         instance = this;
         map = RM.get().getMap(e);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+        background = getTileLayer("background");
 
-        MapLayer doorLayer = getLayer("doors");
-        if (doorLayer == null && Data.PRINT_DEBUG)
+        MapLayer doorLayer = map.getLayers().get("doors"); //explicitly not using getLayer because i don't want throw on null
+        if (doorLayer != null)
+            loadDoors(doorLayer);
+        else if (Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no door layer right?");
 
-        else
-            loadDoors(doorLayer);
 
-        MapLayer buildingsLayer = getLayer("buildings");
-        if (buildingsLayer == null && Data.PRINT_DEBUG)
+        MapLayer buildingsLayer = map.getLayers().get("buildings");
+        if (buildingsLayer != null)
+            loadBuildings(buildingsLayer);
+        else if(Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no buildings layer right?");
 
-        else
-            loadBuildings(buildingsLayer);
 
-        MapLayer componentsLayer = getLayer("components");
-        if (componentsLayer == null && Data.PRINT_DEBUG)
+        MapLayer componentsLayer = map.getLayers().get("components");
+        if (componentsLayer != null)
+            loadComponents(componentsLayer);
+        else if(Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no components layer right?");
 
-        else
-            loadComponents(componentsLayer);
 
-        MapLayer markersLayer = getLayer("markers");
-        if (markersLayer == null && Data.PRINT_DEBUG)
+        MapLayer markersLayer = map.getLayers().get("markers");
+        if (markersLayer != null)
+            loadMarkers(markersLayer);
+        else if(Data.PRINT_DEBUG)
             System.out.println("Are you aware there is no markers layer right?");
 
-        else
-            loadMarkers(markersLayer);
 
         loadReplacers();
     }
@@ -87,8 +89,8 @@ public class MapManager implements Telegraph {
     }
 
     public TiledMap getMap() { return map; }
-    public int getCols(){ return getTileLayer("background").getHeight(); }
-    public int getRows(){ return getTileLayer("background").getWidth(); }
+    public int getCols(){ return background.getWidth(); }
+    public int getRows(){ return background.getHeight(); }
 
     private void loadBuildings(MapLayer buildingsLayer) throws IllegalStateException{
 
@@ -131,12 +133,28 @@ public class MapManager implements Telegraph {
         }
     }
 
+    private String verifyDoorName(String name){
+        if (name == null) {
+            throw new IllegalArgumentException("Door has no name");
+        }
+
+        String[] parts = name.split("-", -1);
+
+        if (parts.length != 2 || parts[0].isBlank() || parts[1].isBlank()) {
+            throw new IllegalArgumentException(
+                    "Invalid door name '" + name + "'. Expected format: source-destination"
+            );
+        }
+
+        return parts[1] + "-" + parts[0];
+    }
+
     private void loadDoors(MapLayer layer) {
         for (MapObject obj : layer.getObjects()) {
             if (obj instanceof RectangleMapObject rectObj) {
                 Rectangle rect = rectObj.getRectangle();
                 String name = obj.getName();
-                String dst = name.split("-")[1] + "-" + name.split("-")[0];
+                String dst = verifyDoorName(name);
                 String dir = Objects.requireNonNull(obj.getProperties().get("dir")).toString();
                 float x = rect.getX(), y = rect.getY();
                 float width = rect.getWidth(), height = rect.getHeight();
@@ -144,7 +162,7 @@ public class MapManager implements Telegraph {
 
             } else if (obj instanceof PointMapObject pointObj) {
                 String name = obj.getName();
-                String dst = name.split("-")[1] + "-" + name.split("-")[0];
+                String dst = verifyDoorName(name);
                 String dir = Objects.requireNonNull(obj.getProperties().get("dir")).toString();
                 int size = (int) Objects.requireNonNullElse(obj.getProperties().get("size"), 1);
                 float x = pointObj.getPoint().x - (16 * size), y = pointObj.getPoint().y;
@@ -178,16 +196,27 @@ public class MapManager implements Telegraph {
     }
 
     public Vector2 getMarker(String name){
-        return Objects.requireNonNull(markersMap.get(name), "marker name is null in markersMap");
+        Vector2 marker = markersMap.get(name);
+
+        if (marker == null) {
+            throw new IllegalArgumentException(
+                    "Unknown marker: " + name
+            );
+        }
+
+        return marker.cpy();
     }
 
     public Vector2 getRandomMarker(){
-        Random random = new Random();
-        return markersMap.values()
-                .stream()
-                .skip(random.nextInt(markersMap.size()))
-                .findFirst()
-                .orElseThrow();
+        if (markersMap.isEmpty()) {
+            throw new IllegalStateException("No markers loaded");
+        }
+
+        int index = MathUtils.random(markersMap.size() - 1);
+
+        return new ArrayList<>(markersMap.values())
+                .get(index)
+                .cpy();
     }
 
     @Override
@@ -213,16 +242,17 @@ public class MapManager implements Telegraph {
         if (layer == null)
             throw new IllegalStateException("layer is null in method: getTile");
 
-        Cell cell = layer.getCell((int) (x) / 32, (int) (y) / 32);
-        if (cell == null)
+        int col = MathUtils.floor(x / Data.TILE);
+        int row = MathUtils.floor(y / Data.TILE);
+        Cell cell = layer.getCell(col, row);
+
+        if (cell == null || cell.getTile() == null) {
             throw new IllegalStateException(
-                    " cell is null in method: 'getTile' on (x,y) = (" + x + "," + y + ") and layer=" + layer.getName());
-
-        TiledMapTile tile = cell.getTile();
-        if (tile == null)
-            throw new IllegalStateException("cell associated to tile is null");
-
-        return tile;
+                    "No tile at world position (" + x + ", " + y
+                            + "), cell (" + col + ", " + row + ")"
+            );
+        }
+        return cell.getTile();
     }
 
 
@@ -249,15 +279,13 @@ public class MapManager implements Telegraph {
      * @throws IllegalStateException if anything is null
      */
     public boolean isWalkable(float x, float y) throws IllegalStateException {
-        TiledMapTileLayer background = getTileLayer("background");
-
         TiledMapTile tile = getTile(x, y, background);
 
         return tile.getProperties().get("blocked") == null;
     }
 
     public boolean changeFightingState() {
-        TiledMapTile playerTile = getTile(GCStage.get().getPlayer().getX(), GCStage.get().getPlayer().getY(), getTileLayer("background"));
+        TiledMapTile playerTile = getTile(GCStage.get().getPlayer().getX(), GCStage.get().getPlayer().getY(), background);
         if (!fightTransitionInCooldown && playerTile.getProperties().containsKey("transition")) {
             fightTransitionInCooldown = true;
             return true;
