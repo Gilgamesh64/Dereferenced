@@ -57,12 +57,12 @@ public class NPC extends ScriptableActor {
 
             boolean leftPressed = Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
 
-            if (leftPressed && !Data.dialogueActive) {
+            if (leftPressed && !Dialogue.dialogueActive) {
                 if (npcBuilder.story != null) tell(npcBuilder.story);
                 if (npcBuilder.interaction != null) npcBuilder.interaction.interact(this);
             }
 
-            if (leftPressed && npcBuilder.story != null && !Data.dialogueActive) {
+            if (leftPressed && npcBuilder.story != null && !Dialogue.dialogueActive) {
                 tell(npcBuilder.story);
             }
         });

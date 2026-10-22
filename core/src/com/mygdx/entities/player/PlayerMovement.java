@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.Data;
 import com.mygdx.GCStage;
 import com.mygdx.camera.CameraController;
+import com.mygdx.dialogues.Dialogue;
 import com.mygdx.map.MapManager;
 
 /**
@@ -25,7 +26,7 @@ public class PlayerMovement {
      * moves the player and returns the correct direction of the body
      */
     public String move() {
-        if (Data.dialogueActive) return lastDirection;
+        if (Dialogue.dialogueActive) return lastDirection;
         return player.isFighting() ? moveWhileFighting() : moveWhileNotFighting();
     }
 

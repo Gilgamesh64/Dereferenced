@@ -34,7 +34,7 @@ public abstract class PlayableScreen extends GenericScreen {
 
     private final MapEnum name;
 
-    protected PlayableScreen(MapEnum map, Vetor2 playerCoords) {
+    protected PlayableScreen(MapEnum map) {
         super();
 
         camera.zoom = 0.7f;
@@ -44,7 +44,7 @@ public abstract class PlayableScreen extends GenericScreen {
 
         mapManager = new MapManager(map);
 
-        player = new Player(playerCoords.cpy());
+        player = new Player();
 
         stage.addActor(player);
         stage.setKeyboardFocus(player);
@@ -135,7 +135,4 @@ public abstract class PlayableScreen extends GenericScreen {
         Hud.get().resize(width, height);
     }
 
-    public MapManager getMapManager(){
-        return mapManager;
-    }
 }

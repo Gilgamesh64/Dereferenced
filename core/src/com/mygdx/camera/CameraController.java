@@ -9,6 +9,7 @@ import com.mygdx.Data;
 import com.mygdx.GCStage;
 
 public class CameraController {
+    public static boolean stopCamera = false;
     private static final float lerpFactor = 5;
     private static CameraShaker cameraShaker;
     private static Vector2 mouseDirection;
@@ -27,12 +28,12 @@ public class CameraController {
     public static void updateCamera() {
 
         if (Gdx.input.isKeyJustPressed(Keys.SHIFT_RIGHT)) {
-            Data.stopCamera = !Data.stopCamera;
+            CameraController.stopCamera = !CameraController.stopCamera;
         }
 
         OrthographicCamera camera = (OrthographicCamera) GCStage.get().getCamera();
         Vector3 cameraPosition = camera.position;
-        if (Data.stopCamera) {
+        if (CameraController.stopCamera) {
             if (Gdx.input.isKeyPressed(Keys.UP)) {
                 cameraPosition.add(0f, 1f, 0f);
             }

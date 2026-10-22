@@ -31,27 +31,28 @@ public class TextureDoor extends Door {
 
         setSize(width, height);
 
-        insideCoords = center.cpy().sub(16, 8);
+        insideCoords = center.cpy();
         outsideCoords = switch (dir) {
-            case "u" -> center.cpy().add(0, -48);
-            case "d" -> center.cpy().add(0, 32);
+            case "u" -> center.cpy().add(0, -36);
+            case "d" -> center.cpy().add(0, 48);
             case "l" -> center.cpy().add(34, 0);
             case "r" -> center.cpy().add(-34, 0);
             default -> center.cpy();
         };
-        outsideCoords.sub(16, 8);
 
         hitbox = new Hitbox(new Vector2(x + width / 2, y + height / 2), width, height, true);
         hitbox.setTags(Tags.DOOR);
         hitbox.setOnHit((collider) -> {
-            if (Data.exiting) {
+            if (ScreenManager.isPlayerExitingDoor) {
                 animationManager.setCurrentAnimation(closingEnum);
                 return;
             }
             animationManager.setCurrentAnimation(openingEnum);
+            ScreenManager.isPlayerExitingDoor = true;
+            ScreenManager.doorName = dst;
             GCStage.get().getPlayer().movAbs(insideCoords, () -> {
-                Data.exiting = true;
-                ScreenManager.setScreen(ScreenEnum.valueOf(dst.split("-")[0]), dst);
+                ScreenManager.setScreen(ScreenEnum.valueOf(dst.split("-")[0]));
+                GCStage.get().getPlayer().exitFromDoor();
             });
         });
         hitbox.register();

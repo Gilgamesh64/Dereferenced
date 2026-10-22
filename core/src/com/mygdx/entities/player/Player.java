@@ -14,6 +14,7 @@ import com.mygdx.camera.CameraController;
 import com.mygdx.entities.AbilityChargeMeter;
 import com.mygdx.entities.MovementAbilityHelper;
 import com.mygdx.entities.helpers.ScriptableActor;
+import com.mygdx.entities.map.doors.Door;
 import com.mygdx.gunControls.GunController;
 import com.mygdx.hitboxes.Collider;
 import com.mygdx.hitboxes.Hitbox;
@@ -22,6 +23,8 @@ import com.mygdx.messages.MSG;
 import com.mygdx.resources.enums.AnimationEnum;
 import com.mygdx.resources.enums.AtlasEnum;
 import com.mygdx.resources.enums.TextureEnum;
+import com.mygdx.savings.SavingsManager;
+import com.mygdx.screens.ScreenManager;
 
 public class Player extends ScriptableActor {
 
@@ -31,7 +34,9 @@ public class Player extends ScriptableActor {
     private Hitbox hitbox = new Hitbox();
     private boolean fighting;
 
-    public Player(Vector2 coordinates) {
+    private boolean justCreated = true;
+
+    public Player() {
         GCStage.get().setPlayer(this);
         setTouchable(Touchable.enabled);
 
@@ -48,7 +53,17 @@ public class Player extends ScriptableActor {
         hitbox.setOnHit((collider) -> System.out.println("Colpito!"));
         hitbox.register();
 
-        setPosition(coordinates.x, coordinates.y);
+        if(ScreenManager.isPlayerExitingDoor){
+            Door exiting = GCStage.get().getDoor(ScreenManager.doorName);
+            setCoords(exiting.getInsideCoords());
+            Gdx.app.postRunnable(() -> getStage().getCamera().position.set(getCoords(), 0));
+            movAbs(exiting.getOutsideCoords(), () -> ScreenManager.isPlayerExitingDoor = false);
+        }
+        else{
+            setCoords(SavingsManager.getSavings().getPlayerCoordinates());
+        }
+        setPosition(getCoords().x, getCoords().y);
+
 
         GunController.get().loadGuns();
         CameraController.calculateMouseAngle(center);
@@ -73,6 +88,8 @@ public class Player extends ScriptableActor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        justCreated = false;
 
         CameraController.calculateMouseAngle(center);
 
@@ -103,6 +120,15 @@ public class Player extends ScriptableActor {
             swapFightingState();
 
         return true;
+    }
+
+    public void exitFromDoor(){
+        if(justCreated) return;
+
+        Door exiting = GCStage.get().getDoor(ScreenManager.doorName);
+        setCoords(exiting.getInsideCoords());
+        Gdx.app.postRunnable(() -> getStage().getCamera().position.set(getCoords(), 0));
+        movAbs(exiting.getOutsideCoords(), () -> ScreenManager.isPlayerExitingDoor = false);
     }
 
     public boolean isFighting() {

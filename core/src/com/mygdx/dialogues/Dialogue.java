@@ -24,6 +24,7 @@ import com.mygdx.resources.RM;
 import java.util.List;
 
 public class Dialogue extends Actor {
+    public static boolean dialogueActive = false;
     private final Story story;
     private final Table table;
     private final TypewriterEffect typer;
@@ -68,7 +69,7 @@ public class Dialogue extends Actor {
 
         Gdx.app.postRunnable(this::continueStory); //Does this the next frame
 
-        Data.dialogueActive = true;
+        Dialogue.dialogueActive = true;
     }
 
     @Override
@@ -165,7 +166,7 @@ public class Dialogue extends Actor {
     }
 
     private void removeDialogue() {
-        Data.dialogueActive = false;
+        Dialogue.dialogueActive = false;
         running = false;
         table.remove();
         remove();
