@@ -10,7 +10,6 @@ import com.mygdx.resources.RM;
 import com.mygdx.resources.enums.AnimationEnum;
 import com.mygdx.resources.enums.MapEnum;
 import com.mygdx.resources.enums.SoundEnum;
-import com.mygdx.screens.ScreenManager;
 import com.mygdx.screens.generic.PlayableScreen;
 
 public class ReflectionArena extends PlayableScreen {

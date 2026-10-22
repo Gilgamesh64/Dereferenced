@@ -68,14 +68,14 @@ public class PlayerMovement {
             finalPosition.y -= 100;
         }
 
-        if (MapManager.get().getTile(player.getX(), player.getY(), MapManager.get().getTileLayer("background")) == null)
+        if (MapManager.get().getTile(player.center.x, player.center.y, MapManager.get().getTileLayer("background")) == null)
             return "";
 
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
             finalPosition.scl(10);
 
         finalPosition.scl(Gdx.graphics.getDeltaTime());
-        if (MapManager.get().isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
+        if (MapManager.get().isWalkable(player.center.x + finalPosition.x, player.center.y + finalPosition.y)) {
             player.setX(player.getX() + finalPosition.x);
             player.setY(player.getY() + finalPosition.y);
         }
@@ -118,14 +118,15 @@ public class PlayerMovement {
         if (finalPosition.x == 0 && finalPosition.y == 0) {
             direction = "IDLE_" + lastDirection.split("_")[1];
         }
-        if (MapManager.get().getTile(player.getX(), player.getY(), MapManager.get().getTileLayer("background")) == null)
-            return "";
+        try{
+            MapManager.get().getTile(player.getX(), player.getY(), MapManager.get().getTileLayer("background"));
+        } catch(IllegalStateException e) {return "IDLE_DOWN"; }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
             finalPosition.scl(10);
 
         finalPosition.scl(Gdx.graphics.getDeltaTime());
-        if (MapManager.get().isWalkable(player.getX() + finalPosition.x, player.getY() + finalPosition.y)) {
+        if (MapManager.get().isWalkable(player.center.x + finalPosition.x, player.getY() + finalPosition.y)) {
             player.setX(player.getX() + finalPosition.x);
             player.setY(player.getY() + finalPosition.y);
         }

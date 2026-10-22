@@ -15,7 +15,6 @@ import com.mygdx.hitboxes.Tags;
 import com.mygdx.map.MapManager;
 import com.mygdx.messages.MSG;
 import com.mygdx.resources.enums.TextureEnum;
-import com.mygdx.screens.ScreenManager;
 
 import java.util.Random;
 

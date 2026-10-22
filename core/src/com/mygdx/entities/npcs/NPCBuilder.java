@@ -15,6 +15,7 @@ public class NPCBuilder {
     protected NpcConstruction construction;
     protected NpcInteraction interaction;
     protected NpcUpdate update;
+    protected boolean wander;
 
     private NPCBuilder(AnimationEnum anim, Vector2 coords) {
         this.anim = anim;
@@ -57,6 +58,10 @@ public class NPCBuilder {
 
     public NPCBuilder onUpdate(NpcUpdate update) {
         this.update = update;
+        return this;
+    }
+    public NPCBuilder wander(){
+        wander = true;
         return this;
     }
 

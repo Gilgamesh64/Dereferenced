@@ -15,6 +15,7 @@ public class Inside extends PlayableScreen {
 
     private final NPCBuilder poorPeopleBuilder = NPCBuilder.create(AnimationEnum.JERKINS, spawnX, spawnY)
             .autoStartedScript(ScriptEnum.CANTEEN);
+
     private final Action spawnNPC = Actions.forever(Actions.sequence(
             Actions.run(this::getSpawnRate),
             Actions.delay(getSpawnRate()),
@@ -23,7 +24,7 @@ public class Inside extends PlayableScreen {
 
     public Inside() {
         super(MapEnum.INSIDE);
-        stage.addAction(spawnNPC);
+        //stage.addAction(spawnNPC);
     }
 
     private int getSpawnRate() {

@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class ScreenManager {
 
     private static final HashMap<ScreenEnum, GenericScreen> map = new HashMap<>();
-    private static ScreenEnum lastPlayableActiveScreenEnum;
+    private static ScreenEnum lastPlayable;
 
     public static GenericScreen getScreen(ScreenEnum name) {
         if (map.get(name) == null) {
@@ -50,11 +50,11 @@ public class ScreenManager {
             }
         }
         if (map.get(name) instanceof PlayableScreen)
-            lastPlayableActiveScreenEnum = name;
+            lastPlayable = name;
         return map.get(name);
     }
 
-    public static PlayableScreen getPlayableScreen(ScreenEnum screenName) {
+    public static PlayableScreen getPlayable(ScreenEnum screenName) {
         return (PlayableScreen) getScreen(screenName);
     }
 
@@ -62,12 +62,12 @@ public class ScreenManager {
         return map.get(screenName) == null;
     }
 
-    public static PlayableScreen getCurrentPlayableScreen() {
-        return getPlayableScreen(getLastPlayableActiveScreenEnum());
+    public static PlayableScreen getCurrentPlayable() {
+        return getPlayable(getLastPlayable());
     }
 
-    public static ScreenEnum getLastPlayableActiveScreenEnum() {
-        return lastPlayableActiveScreenEnum;
+    public static ScreenEnum getLastPlayable() {
+        return lastPlayable;
     }
 
     public static void setScreen(ScreenEnum s) {

@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.entities.helpers.GameActor;
 import com.mygdx.map.MapManager;
-import com.mygdx.screens.ScreenManager;
 
 public class PathFinder {
 

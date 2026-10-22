@@ -16,7 +16,6 @@ import com.mygdx.path.Path;
 import com.mygdx.path.PathFinder;
 import com.mygdx.resources.enums.AtlasEnum;
 import com.mygdx.resources.enums.TextureEnum;
-import com.mygdx.screens.ScreenManager;
 import com.mygdx.scripts.Script;
 
 public class NPC extends ScriptableActor {
@@ -29,7 +28,7 @@ public class NPC extends ScriptableActor {
 
     private final NpcUpdate onUpdate;
 
-    private final boolean wander = true;
+    private boolean wander = false;
 
     public NPC(NPCBuilder npcBuilder) {
         super();
@@ -46,6 +45,7 @@ public class NPC extends ScriptableActor {
         name = npcBuilder.anim.toString();
 
         onUpdate = npcBuilder.update;
+        wander = npcBuilder.wander;
 
         hitbox = new Hitbox(center, npcBuilder.size.x, npcBuilder.size.y, true);
         hitbox.setTags(Tags.NPC, Tags.ENEMY);

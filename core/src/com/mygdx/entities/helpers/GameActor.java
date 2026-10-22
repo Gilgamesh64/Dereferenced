@@ -4,27 +4,29 @@ import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.AnimationManager;
 import com.mygdx.map.MapManager;
 import com.mygdx.movement.AutoMovementManager;
-import com.mygdx.screens.ScreenManager;
 
 public class GameActor extends Actor implements Telegraph {
 
-    protected final AutoMovementManager autoMovementManager = new AutoMovementManager(this);
     public Vector2 center = new Vector2();
+    protected final AutoMovementManager autoMovementManager = new AutoMovementManager(this);
     protected AnimationManager animationManager;
 
     @Override
     protected void positionChanged() {
         super.positionChanged();
-        center.x = getX() + getOriginX();
-        center.y = getY() + getOriginY();
+        center.x = getX(Align.center);
+        center.y = getY(Align.center);
     }
 
     public void setCoords(float x, float y) {
         setX(x);
         setY(y);
+        center.x = getX(Align.center);
+        center.y = getY(Align.center);
     }
 
     public Vector2 getCoords() {
@@ -32,8 +34,7 @@ public class GameActor extends Actor implements Telegraph {
     }
 
     public void setCoords(Vector2 coords) {
-        setX(coords.x);
-        setY(coords.y);
+        setCoords(coords.x, coords.y);
     }
 
     public void movAbs(Vector2 coords) {
@@ -76,5 +77,14 @@ public class GameActor extends Actor implements Telegraph {
     @Override
     public boolean handleMessage(Telegram msg) {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("coords: (x,y) = (").append(getX() + "," + getY());
+        sb.append("center: (x,y) = (").append(center.x + "," + center.y);
+        sb.append("is auto walking: ").append(isAutoWalking());
+        return sb.toString();
     }
 }

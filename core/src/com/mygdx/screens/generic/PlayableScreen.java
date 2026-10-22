@@ -34,7 +34,7 @@ public abstract class PlayableScreen extends GenericScreen {
 
     private final MapEnum name;
 
-    protected PlayableScreen(MapEnum map) {
+    protected PlayableScreen(MapEnum map, Vetor2 playerCoords) {
         super();
 
         camera.zoom = 0.7f;
@@ -44,7 +44,7 @@ public abstract class PlayableScreen extends GenericScreen {
 
         mapManager = new MapManager(map);
 
-        player = new Player(SavingsManager.getSavings().getPlayerCoordinates());
+        player = new Player(playerCoords.cpy());
 
         stage.addActor(player);
         stage.setKeyboardFocus(player);
@@ -133,14 +133,6 @@ public abstract class PlayableScreen extends GenericScreen {
     public void resize(int width, int height) {
         super.resize(width, height);
         Hud.get().resize(width, height);
-
-    }
-
-    public void exitFrom(String doorName) {
-        Door door = GCStage.get().getDoor(doorName);
-        player.setCoords(door.getInsideCoords());
-        stage.getCamera().position.set(getPlayerCoordinates(), 0);
-        player.movAbs(door.getOutsideCoords(), () -> Data.exiting = false);
     }
 
     public MapManager getMapManager(){

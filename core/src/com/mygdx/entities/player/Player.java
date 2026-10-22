@@ -117,8 +117,4 @@ public class Player extends ScriptableActor {
 
         fighting = !fighting;
     }
-
-    public Vector2 getCenter() {
-        return center;
-    }
 }

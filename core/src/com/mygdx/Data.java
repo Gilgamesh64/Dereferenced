@@ -15,4 +15,5 @@ public class Data {
     public static boolean stopCamera = false;
     public static boolean dialogueActive = false;
     public static boolean exiting = false;
+    public static boolean loadedPlayer = false;
 }
