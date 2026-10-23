@@ -11,6 +11,7 @@ import com.mygdx.hitboxes.Tags;
 import com.mygdx.resources.enums.AnimationEnum;
 import com.mygdx.resources.enums.AtlasEnum;
 import com.mygdx.resources.enums.TextureEnum;
+import com.mygdx.screens.ScreenManager;
 
 public class Building extends GameActor {
 
@@ -30,7 +31,7 @@ public class Building extends GameActor {
                         getY() + 16 + animationManager.getHeight() * 0.5f),
                 animationManager.getWidth(), animationManager.getHeight() - 32, true);
         hitbox.setTags(Tags.BUILDING);
-        hitbox.setOnHit((collider) -> fade = 0.2f);
+        hitbox.setOnHit((collider) -> { if(!ScreenManager.isPlayerExitingDoor) fade = 0.2f; });
         hitbox.setOnLeave((collider) -> fade = 1);
         hitbox.register();
         if (Data.HITBOX_DEBUG) debug();

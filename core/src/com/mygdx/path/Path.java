@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.GridPoint2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Arrays;
 
 public class Path {
@@ -28,6 +29,14 @@ public class Path {
 
     public static Path of(GridPoint2... path) {
         return new Path(new ArrayList<>(Arrays.asList(path)));
+    }
+    public static Path joining(Path... steps){
+        ArrayList<GridPoint2> merged = new ArrayList<>();
+
+        for (Path p : steps) {
+            merged.addAll(p.path);
+        }
+        return new Path(merged);
     }
 
     public void advance(ScriptableActor entity) {

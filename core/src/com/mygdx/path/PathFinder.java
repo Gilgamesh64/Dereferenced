@@ -12,28 +12,32 @@ import java.util.Set;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.Data;
 import com.mygdx.entities.helpers.GameActor;
 import com.mygdx.map.MapManager;
 
 public class PathFinder {
 
     private static final int[][] DIRECTIONS = {
-        { 0, 1 },   // Up
-        { 0, -1 },  // Down
-        { -1, 0 },  // Left
-        { 1, 0 }    // Right
+            { 0, 1 }, // Up
+            { 0, -1 }, // Down
+            { -1, 0 }, // Left
+            { 1, 0 } // Right
     };
 
-    public static Path find(GameActor from, Vector2 to){
-        GridPoint2 start = actorToGrid(from);
+    public static Path find(Vector2 from, Vector2 to) {
+        GridPoint2 start = vecToGrid(from);
         GridPoint2 goal = vecToGrid(to);
 
         if (IsOutsideMap(start) || IsOutsideMap(goal)) {
+            if (Data.PRINT_DEBUG)
+                System.out.println("from or to coordinates out of map for: " + from + " " + to);
             return Path.of();
         }
 
-        if (!MapManager.get().isWalkable(start.x, start.y)
-                || !MapManager.get().isWalkable(goal.x, goal.y)) {
+        if (!MapManager.get().isWalkable(from.x, from.y)
+                || !MapManager.get().isWalkable(to.x, to.y)) {
+            
             return Path.of();
         }
 
@@ -91,7 +95,11 @@ public class PathFinder {
     }
 
     public static Path find(GameActor from, GameActor to) {
-        return find(from, to.center);
+        return find(from.center, to.center);
+    }
+
+    public static Path find(GameActor from, Vector2 to) {
+        return find(from.center, to);
     }
 
     private static GridPoint2 actorToGrid(GameActor actor) {
@@ -101,7 +109,7 @@ public class PathFinder {
         return new GridPoint2(col, row);
     }
 
-    private static GridPoint2 vecToGrid(Vector2 vec){
+    private static GridPoint2 vecToGrid(Vector2 vec) {
         int col = MathUtils.floor(vec.x / 32);
         int row = MathUtils.floor(vec.y / 32);
 
@@ -118,7 +126,7 @@ public class PathFinder {
                 + Math.abs(a.y - b.y);
     }
 
-    private static List<GridPoint2> reconstructPath( Map<GridPoint2, GridPoint2> cameFrom, GridPoint2 current) {
+    private static List<GridPoint2> reconstructPath(Map<GridPoint2, GridPoint2> cameFrom, GridPoint2 current) {
 
         List<GridPoint2> path = new ArrayList<>();
 
@@ -128,7 +136,8 @@ public class PathFinder {
         }
 
         Collections.reverse(path);
-        if(!path.isEmpty()) path.remove(0);
+        if (!path.isEmpty())
+            path.remove(0);
         return path;
     }
 

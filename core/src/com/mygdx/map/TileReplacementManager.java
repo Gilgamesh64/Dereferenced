@@ -68,10 +68,10 @@ public class TileReplacementManager {
     }
 
     public void handle() {
-        if (isBlocked)
+        /*if (isBlocked)
             unBlockTiles();
         else
-            blockTiles();
+            blockTiles(); */
 
         isBlocked = !isBlocked;
     }

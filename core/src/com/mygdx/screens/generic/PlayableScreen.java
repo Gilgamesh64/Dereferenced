@@ -50,29 +50,20 @@ public abstract class PlayableScreen extends GenericScreen {
         stage.setKeyboardFocus(player);
 
         hud = new Hud(mux);
-        Hud.set(hud);
         this.name = map;
+
+        setGlobs();
     }
 
     @Override
     public void show() {
         super.show();
-
-        HitboxHandler.set(hitboxHandler);
-        Hud.set(hud);
-        MapManager.set(mapManager);
-
-        CameraController.initCamera();
+        setGlobs();
 
         GCStage.get().subscribe(mapManager, MSG.BLOCK_WALLS, MSG.SWAP_FIGHT_STATE);
         GCStage.get().subscribe(player, MSG.SWAP_FIGHT_STATE);
         if (SavingsManager.getSavings().isFightging())
             GCStage.get().send(MSG.SWAP_FIGHT_STATE, MSG.BLOCK_WALLS); //turns on combat mode
-
-        GCStage.get().setPlayer(player);
-
-        stage.getCamera().position.set(getPlayerCoordinates(), 0);
-
     }
 
     @Override
@@ -111,6 +102,15 @@ public abstract class PlayableScreen extends GenericScreen {
 
         hud.update();
         hud.draw();
+    }
+
+    private void setGlobs(){
+        HitboxHandler.set(hitboxHandler);
+        GCStage.get().setPlayer(player);
+        Hud.set(hud);
+        MapManager.set(mapManager);
+        CameraController.initCamera();
+        stage.getCamera().position.set(getPlayerCoordinates(), 0);
     }
 
     protected void stopGame() {
